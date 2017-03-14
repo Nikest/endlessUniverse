@@ -52,7 +52,7 @@ function AstroSystem() {
             }
         },
         getProperty: function (propArray, percent) {
-            return (((propArray[1] - propArray[0]) / 10) * percent) + propArray[0]
+            return (((propArray[1] - propArray[0]) / 10) * (10 - percent)) + propArray[0]
         },
         maxStarRadius: 8,
         minStarRadius: 0.4
@@ -133,12 +133,15 @@ function astroService(astroModule) {
                 'fast', 'mast', 'bast', 'alo', 'ala', 'alu', 'ali', 'olo', 'ola', 'olu', 'oli', 'jar', 'jor', 'jur',
                 'jir', 'jer', 'ari', 'ori', 'uri', 'eri', 'thor', 'tpor', 'tbor', 'tmor', 'tsor', 'zif', 'zuf', 'zef',
                 'zaf', 'zair', 'zeir', 'zoir', 'zuir', 'nipal', 'nopal', 'napal', 'nupal', 'argan', 'argon', 'argun',
-                'argin'];
+                'argin', 'ora', 'ara', 'oru', 'ori'];
             var nameLength = (Math.floor(Math.random() * 4)) + 1;
             var name = '';
             for(var i = 0; i < nameLength; i++) {
                 name = name + particles[Math.floor(Math.random() * particles.length)];
                 if(name.length > 9) break
+            }
+            if(name.length <= 2) {
+                return this.nameCreator()
             }
             return name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); }).slice(0,10);
         },
@@ -194,8 +197,8 @@ function astroView(astroModule, servise) {
             var yCounter = 0;
 
             for(var s = 0; s < stars.length; s++) {
-                var xCoord = xCounter + padding + servise.random(density / 0.6);
-                var yCoord = yCounter + padding + servise.random(density);
+                var xCoord = xCounter + servise.random(density / 0.4);
+                var yCoord = yCounter + servise.random(density);
                 var radius = ((maxView - minView) / 100) * (stars[s].radius / radiusPercent) + minView;
                 var star = new Konva.Circle({
                     x: xCoord,
@@ -206,11 +209,11 @@ function astroView(astroModule, servise) {
 
                 var toMsg = stars[s].name + ' ' + stars[s].type;
 
-                (function (star, toMsg) {
-                    star.on('mousedown touchstart', function() {
-                        console.log(toMsg)
+                (function (starView, starObj) {
+                    starView.on('mousedown touchstart', function() {
+                        console.log(starObj)
                     });
-                })(star, toMsg);
+                })(star, stars[s]);
 
 
                 var title = new Konva.Text({
