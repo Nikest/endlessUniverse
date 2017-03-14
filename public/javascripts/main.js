@@ -122,13 +122,25 @@ function astroService(astroModule) {
             return density
         },
         nameCreator: function() {
-            var particles = ['gen', 'bar', 'tis', 'nut', 'zar', 'zi', 'tor', 'vanu', 'dosh', 'zaut', 'at', 'om', 'io', 'jul', 'lush', 'mer', 'am', 'svi', 'reg', 'gar', 'met', 'dias', 'octa', 'uar', 'kie', 'laiv', 'astar', 'steri', 'dloub', 'sabir', 'ir', 'kaab', 'anu', 'onuma', 'hom', 'mat', 'orkat', 'sar', 'uva', 'ton'];
+            var particles =
+                ['re', 'te', 'de', 'ge', 'je', 'ke', 'le', 'ce', 've', 'be', 'ne', 'me', 'ru', 'tu', 'du', 'gu', 'ju', 'ku',
+                'lu', 'cu', 'vu', 'bu', 'nu', 'mu', 'ro', 'to', 'do', 'go', 'jo', 'ko', 'lo', 'co', 'vo', 'bo', 'no',
+                'mo', 'ra', 'ta', 'da', 'ga', 'ja', 'ka', 'la', 'ca', 'va', 'ba', 'na', 'ma', 'fe', 'fo', 'fa', 'fi',
+                'war', 'tar', 'bar', 'gar', 'har', 'kar', 'par', 'car', 'nar', 'mar', 'zar', 'a', 'o', 'u', 'i', 'e',
+                'u', 'astar', 'ostar', 'vastar', 'istar', 'ustar', 'estar', 'zar', 'zor', 'zir', 'zer', 'zur', 'bar',
+                'mar', 'nar', 'zan', 'zon', 'zun', 'zen', 'zin', 'ard', 'ord', 'urd', 'ird', 'kurd', 'kord', 'kird',
+                'kerd', 'zam', 'zom', 'zum', 'zem', 'zim', 'and', 'ond', 'und', 'ind', 'burd', 'bord', 'bird', 'berd',
+                'fast', 'mast', 'bast', 'alo', 'ala', 'alu', 'ali', 'olo', 'ola', 'olu', 'oli', 'jar', 'jor', 'jur',
+                'jir', 'jer', 'ari', 'ori', 'uri', 'eri', 'thor', 'tpor', 'tbor', 'tmor', 'tsor', 'zif', 'zuf', 'zef',
+                'zaf', 'zair', 'zeir', 'zoir', 'zuir', 'nipal', 'nopal', 'napal', 'nupal', 'argan', 'argon', 'argun',
+                'argin'];
             var nameLength = (Math.floor(Math.random() * 4)) + 1;
             var name = '';
             for(var i = 0; i < nameLength; i++) {
-                name = name + particles[Math.floor(Math.random() * particles.length)]
+                name = name + particles[Math.floor(Math.random() * particles.length)];
+                if(name.length > 9) break
             }
-            return name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+            return name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); }).slice(0,10);
         },
         createStars: function (dens) {
             density = dens;
