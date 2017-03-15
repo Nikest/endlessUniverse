@@ -197,7 +197,7 @@ function AstroViewer() {
     var stage;
     var layer;
     var background;
-    var starsLayer;
+    var generalLayer;
 
     return {
         inject: function (Integrator) {
@@ -227,19 +227,19 @@ function AstroViewer() {
                 fill: '#202020'
             });
             layer.add(background);
-            starsLayer = new Konva.Layer({
+            generalLayer = new Konva.Layer({
                 name: 'stars'
             });
-            console.log(starsLayer);
             stage.add(layer);
         },
-        getStarsLayer: function () {
-            return starsLayer
+        getGeneralLayer: function () {
+            return generalLayer
         },
         getStage: function () {
             return stage
         },
         viewStars: function (minView, maxView) {
+            generalLayer.destroy();
             var density = astroService.getDensity();
             var stars = astroSystem.getAllStars();
             var padding = 20;
@@ -291,7 +291,6 @@ function AstroViewer() {
                     });
                 })(star, stars[s]);
 
-
                 var title = new Konva.Text({
                     x: xCoord - 5,
                     y: yCoord + radius + 3,
@@ -301,8 +300,8 @@ function AstroViewer() {
                     fill: '#fff'
                 });
 
-                starsLayer.add(star);
-                starsLayer.add(title);
+                generalLayer.add(star);
+                generalLayer.add(title);
 
                 if(xCounter < (width - density - padding)) {
                     xCounter += density;
@@ -311,19 +310,21 @@ function AstroViewer() {
                     yCounter += density
                 }
             }
-            stage.add(starsLayer);
+            stage.add(generalLayer);
         }
     }
 }
 
 function Interface() {
     var messager;
-
+    var integrator;
     return {
         inject: function (Integrator) {
-            messager = Integrator.getMessager()
+            integrator = Integrator;
         },
         init: function () {
+            messager = integrator.getMessager();
+
             var overlays = document.getElementsByClassName('overlay');
             Array.prototype.forEach.call(overlays, function (el) {
                 el.addEventListener('click', function () {
@@ -358,6 +359,14 @@ function Interface() {
                         body: ['<p class="center">' + res + '</p>']
                     })
                 });
+            });
+
+            menuGenerateSystem.addEventListener('click', function () {
+                integrator.createNew();
+            });
+
+            menuLoadSystem.addEventListener('click', function () {
+                integrator.loadSystem();
             });
 
             document.body.addEventListener('mousemove', function (e) {
@@ -477,23 +486,33 @@ function Integrator(AstroSystem, AstroService, AstroViewer, Interface, Messager)
     getter.getMessager = function () {
         return messager;
     };
+    getter.createNew = function () {
+        astroSystem.starsClear();
+        creator();
+    };
+    getter.loadSystem = function () {
+        loader();
+    };
 
     function creator() {
         astroService.createStars(100);
         astroViewer.viewStars(3, 7);
     }
 
-    this.render = function () {
+    function loader() {
         messager.loadFromServer().then(function (res) {
             astroSystem.systemLoadFromJSON(res);
             astroViewer.viewStars(3, 7);
         }, function () {
             creator();
         })
+    }
+
+    this.render = function () {
+        loader();
     };
     this.createNew = function () {
-        astroSystem.starsClear();
-        creator();
+        getter.createNew();
     };
     this.create = function () {
         astroSystem = new AstroSystem();
