@@ -9,4 +9,19 @@ a {
 svg {
   background: #000; }
 
+#screenContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  overflow: hidden; }
+  #screenContainer #generalScreen {
+    position: absolute;
+    top: 0;
+    left: 0; }
+
 /*# sourceMappingURL=style.css.map */

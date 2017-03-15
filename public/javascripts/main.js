@@ -167,19 +167,20 @@ function astroView(astroModule, servise) {
     var width = servise.getSize().width;
     var height = servise.getSize().height;
     var density = servise.getDensity();
+    var paddindWorld = 100;
 
     var stage = new Konva.Stage({
         container: 'generalScreen',
-        width: width,
-        height: height,
+        width: width + (paddindWorld * 4),
+        height: height + (paddindWorld * 4),
         fill: '#000'
     });
     var layer = new Konva.Layer();
     var background = new Konva.Rect({
         x: 0,
         y: 0,
-        width: width,
-        height: height,
+        width: width + (paddindWorld * 4),
+        height: height + (paddindWorld * 4),
         fill: '#202020'
     });
 
@@ -202,7 +203,7 @@ function astroView(astroModule, servise) {
             for(var s = 0; s < stars.length; s++) {
                 var xCoord;
                 if(!stars[s].x) {
-                    xCoord = xCounter + servise.random(density / 0.4);
+                    xCoord = (xCounter + servise.random(density / 0.4)) + paddindWorld;
                     stars[s].x = xCoord;
                 } else {
                     xCoord = stars[s].x
@@ -210,7 +211,7 @@ function astroView(astroModule, servise) {
 
                 var yCoord;
                 if(!stars[s].y) {
-                    yCoord = yCounter + servise.random(density / 0.4);
+                    yCoord = (yCounter + servise.random(density / 0.4)) + paddindWorld;
                     stars[s].y = yCoord;
                 } else {
                     yCoord = stars[s].y
@@ -303,6 +304,19 @@ function integrator(AstroSystem, astroService, astroView) {
         }
     }
 }
+
+function Interfase() {
+    document.body.addEventListener('mousemove', function (e) {
+        var percentX = (100 / window.innerWidth) * e.screenX;
+        var percentY = (100 / window.innerHeight) * e.screenY;
+
+        var canvasOuterX = generalScreen.clientWidth - window.innerWidth;
+        var canvasOuterY = generalScreen.clientHeight - window.innerHeight - 100;
+
+        generalScreen.style.left = (0 - ((canvasOuterX / 100) * percentX)) + 'px';
+        generalScreen.style.top = (0 - ((canvasOuterY / 100) * percentY)) + 'px';
+    });
+} Interfase();
 
 var integr = integrator(AstroSystem, astroService, astroView);
 integr.init();
