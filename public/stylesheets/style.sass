@@ -1,15 +1,4 @@
-body
-  padding: 0
-  margin: 0
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
-
-a
-  color: #00B7FF
-
-svg
-  background: #000
-
-#screenContainer
+@mixin fullfixed
   position: fixed
   top: 0
   left: 0
@@ -17,6 +6,49 @@ svg
   padding: 0
   width: 100vw
   height: 100vh
+
+body
+  padding: 0
+  margin: 0
+  font: 12px "Lucida Grande", Helvetica, Arial, sans-serif
+  font-weight: 100
+
+a
+  color: #00B7FF
+
+svg
+  background: #000
+
+#messageContainer
+  @include fullfixed
+  background: rgba(0, 0, 0, 0.5)
+  z-index: 99
+  display: none
+  justify-content: center
+  align-items: center
+
+  #message
+    width: 300px
+    height: 450px
+    color: #fff
+    background: #000
+    padding: 0
+
+    h1
+      text-align: center
+      background: #585858
+      padding: 10px
+      margin: 0
+
+    #messageBody
+      padding: 5px 15px
+
+      span
+        color: #eecdff
+        font-size: 1.3em
+
+#screenContainer
+  @include fullfixed
   background: #000
   overflow: hidden
 

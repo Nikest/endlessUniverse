@@ -1,13 +1,44 @@
 body {
   padding: 0;
   margin: 0;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+  font: 12px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-weight: 100; }
 
 a {
   color: #00B7FF; }
 
 svg {
   background: #000; }
+
+#messageContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  display: none;
+  justify-content: center;
+  align-items: center; }
+  #messageContainer #message {
+    width: 300px;
+    height: 450px;
+    color: #fff;
+    background: #000;
+    padding: 0; }
+    #messageContainer #message h1 {
+      text-align: center;
+      background: #585858;
+      padding: 10px;
+      margin: 0; }
+    #messageContainer #message #messageBody {
+      padding: 5px 15px; }
+      #messageContainer #message #messageBody span {
+        color: #eecdff;
+        font-size: 1.3em; }
 
 #screenContainer {
   position: fixed;

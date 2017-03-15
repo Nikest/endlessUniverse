@@ -46,13 +46,13 @@ function AstroSystem() {
             'M': {
                 temperatures: [2400, 3700],
                 color: '#fc602d',
-                lum: [30000, 50000],
+                lum: [0.04, 0.08],
                 radius: [0.4, 0.7],
                 mass: [0.08, 0.45]
             }
         },
         getProperty: function (propArray, percent) {
-            return (((propArray[1] - propArray[0]) / 10) * (10 - percent)) + propArray[0]
+            return parseFloat(((((propArray[1] - propArray[0]) / 10) * (10 - percent)) + propArray[0]).toFixed(2))
         },
         maxStarRadius: 8,
         minStarRadius: 0.4
@@ -163,7 +163,7 @@ function astroService(astroModule) {
     }
 }
 
-function astroView(astroModule, servise) {
+function astroView(astroModule, servise, interfase) {
     var width = servise.getSize().width;
     var height = servise.getSize().height;
     var density = servise.getDensity();
@@ -230,6 +230,14 @@ function astroView(astroModule, servise) {
 
                 (function (starView, starObj) {
                     starView.on('mousedown touchstart', function() {
+                        interfase.sendMessage({
+                            title: 'Star: ' + starObj.name,
+                            body: ['Class: <span>' + starObj.type + '</span>',
+                                'Temperature: <span>' + starObj.temperature + '</span>K',
+                                'Mass: <span>' + starObj.mass + '</span> in solar mass',
+                                'Radius: <span>' + starObj.radius + '</span> in solar radius',
+                                'Luminisity: <span>' + starObj.lum + '</span> in solar luminisity']
+                        });
                         console.log(starObj)
                     });
                 })(star, stars[s]);
@@ -292,13 +300,14 @@ function integrator(AstroSystem, astroService, astroView) {
         },
         init: function () {
             servise.setSize(window.innerWidth, window.innerHeight);
+            var interfase = Interfase();
             this.systemLoad().then(function (data) {
                 astroModule.systemLoadFromJSON(data);
-                var view = astroView(astroModule, servise);
+                var view = astroView(astroModule, servise, interfase);
                 view.viewStars(3, 7);
             }, function () {
                 servise.createStars(100);
-                var view = astroView(astroModule, servise);
+                var view = astroView(astroModule, servise, interfase);
                 view.viewStars(3, 7);
             });
         }
@@ -306,6 +315,14 @@ function integrator(AstroSystem, astroService, astroView) {
 }
 
 function Interfase() {
+    messageContainer.addEventListener('click', function () {
+        messageContainer.style.display = 'none'
+    });
+
+    message.addEventListener('click', function (e) {
+        e.stopPropagation()
+    });
+
     document.body.addEventListener('mousemove', function (e) {
         var percentX = (100 / window.innerWidth) * e.screenX;
         var percentY = (100 / window.innerHeight) * e.screenY;
@@ -316,7 +333,18 @@ function Interfase() {
         generalScreen.style.left = (0 - ((canvasOuterX / 100) * percentX)) + 'px';
         generalScreen.style.top = (0 - ((canvasOuterY / 100) * percentY)) + 'px';
     });
-} Interfase();
 
-var integr = integrator(AstroSystem, astroService, astroView);
+    return {
+        sendMessage: function (prop) {
+            messageContainer.style.display = 'flex';
+            messageTitle.innerText = prop.title;
+            var msBody = prop.body.map(function (i) {
+                return '<p>' + i + '</p>'
+            });
+            messageBody.innerHTML = msBody.join('</br>')
+        }
+    }
+}
+
+var integr = integrator(AstroSystem, astroService, astroView, Interfase);
 integr.init();
