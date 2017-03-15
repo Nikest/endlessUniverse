@@ -12,4 +12,9 @@ router.get('/', function(req, res, next) {
     res.send(astroSystem);
 });
 
+router.delete('/', function (req, res) {
+    astroSystem = null;
+    res.send('delete');
+});
+
 module.exports = router;

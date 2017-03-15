@@ -1,3 +1,6 @@
+$mainColor: #eecdff
+$mainGrey: #585858
+
 @mixin fullfixed
   position: fixed
   top: 0
@@ -16,17 +19,22 @@ body
 a
   color: #00B7FF
 
-svg
-  background: #000
+.button
+  background: $mainGrey
+  padding: 10px 15px
+  color: #ffffff
+  border: none
+  outline: none
 
-#messageContainer
+.overlay
   @include fullfixed
   background: rgba(0, 0, 0, 0.5)
   z-index: 99
-  display: flex
+  display: none
   justify-content: center
   align-items: center
 
+#messageContainer
   #message
     width: 300px
     height: auto
@@ -39,7 +47,7 @@ svg
 
     h1
       text-align: center
-      background: #585858
+      background: $mainGrey
       padding: 10px
       margin: 0
 
@@ -59,3 +67,26 @@ svg
     position: absolute
     top: 0
     left: 0
+
+#generalMenu
+  position: relative
+
+  #menuToggle
+    position: absolute
+    top: 15px
+    right: 15px
+    z-index: 9
+
+  #menuContainer
+    nav
+      background: #000
+      width: 100vw
+      height: auto
+      top: 0
+      left: 0
+      position: fixed
+      text-align: center
+
+      button
+        margin: 15px
+

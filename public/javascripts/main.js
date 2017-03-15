@@ -103,10 +103,13 @@ function AstroSystem() {
     }
 }
 
-function astroService(astroModule) {
+function AstroService(Integrator) {
+    var astroSystem = Integrator.getAstroSystem();
+
     var width = 0;
     var height = 0;
     var density = 0;
+
     return {
         random: function (num) {
             return Math.floor(Math.random() * num)
@@ -152,21 +155,24 @@ function astroService(astroModule) {
             density = dens;
             var num = (width / density) * (height / density);
 
-            var types = astroModule.getStarClasses();
+            var types = astroSystem.getStarClasses();
             function getRandomStarType() {
                 return types[(Math.floor(Math.random() * types.length))] + '' + (Math.floor(Math.random() * 10))
             }
             for(var i = 0; i < num; i++) {
-                astroModule.createStar(this.nameCreator(), getRandomStarType())
+                astroSystem.createStar(this.nameCreator(), getRandomStarType())
             }
         }
     }
 }
 
-function astroView(astroModule, servise, interfase) {
-    var width = servise.getSize().width;
-    var height = servise.getSize().height;
-    var density = servise.getDensity();
+function AstroViewer(Integrator) {
+    var astroSystem = Integrator.getAstroSystem();
+    var astroService = Integrator.getAstroService();
+    var interfase =  Integrator.getInterface();
+
+    var width = astroService.getSize().width;
+    var height = astroService.getSize().height;
     var paddindWorld = 100;
 
     var stage = new Konva.Stage({
@@ -190,12 +196,13 @@ function astroView(astroModule, servise, interfase) {
 
     return {
         viewStars: function (minView, maxView) {
-            var stars = astroModule.getAllStars();
+            var density = astroService.getDensity();
+            var stars = astroSystem.getAllStars();
             var starsLayer = new Konva.Layer();
             var padding = 20;
 
-            var maxStarRadius = astroModule.getStarsRadius().max;
-            var minStarRadius = astroModule.getStarsRadius().min;
+            var maxStarRadius = astroSystem.getStarsRadius().max;
+            var minStarRadius = astroSystem.getStarsRadius().min;
             var radiusPercent = (maxStarRadius - minStarRadius) / 100;
             var xCounter = 0;
             var yCounter = 0;
@@ -203,7 +210,7 @@ function astroView(astroModule, servise, interfase) {
             for(var s = 0; s < stars.length; s++) {
                 var xCoord;
                 if(!stars[s].x) {
-                    xCoord = (xCounter + servise.random(density / 0.4)) + paddindWorld;
+                    xCoord = (xCounter + astroService.random(density / 0.4)) + paddindWorld;
                     stars[s].x = xCoord;
                 } else {
                     xCoord = stars[s].x
@@ -211,7 +218,7 @@ function astroView(astroModule, servise, interfase) {
 
                 var yCoord;
                 if(!stars[s].y) {
-                    yCoord = (yCounter + servise.random(density / 0.4)) + paddindWorld;
+                    yCoord = (yCounter + astroService.random(density / 0.4)) + paddindWorld;
                     stars[s].y = yCoord;
                 } else {
                     yCoord = stars[s].y
@@ -268,59 +275,33 @@ function astroView(astroModule, servise, interfase) {
     }
 }
 
-function integrator(AstroSystem, astroService, astroView) {
-    var astroModule = new AstroSystem();
-    var servise = astroService(astroModule);
+function Interface(Integrator) {
+    var messager = Integrator.getMessager();
 
-    return {
-        systemSave: function () {
-            var xhr = new XMLHttpRequest();
-            var body = JSON.stringify(astroModule.getAllStars());
-            xhr.open("POST", '/save', true);
-            xhr.setRequestHeader('Content-type', 'application/json');
-            xhr.onreadystatechange = function (a) {
-
-            };
-            xhr.send(body);
-        },
-        systemLoad: function () {
-            return new Promise(function (res, rej) {
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", '/load', true);
-                xhr.onreadystatechange = function (a) {
-                    if(xhr.readyState == 4) {
-                        if(xhr.response) {
-                            return res(xhr.response)
-                        }
-                        return rej(false)
-                    }
-                };
-                xhr.send();
-            })
-        },
-        init: function () {
-            servise.setSize(window.innerWidth, window.innerHeight);
-            var interfase = Interfase();
-            this.systemLoad().then(function (data) {
-                astroModule.systemLoadFromJSON(data);
-                var view = astroView(astroModule, servise, interfase);
-                view.viewStars(3, 7);
-            }, function () {
-                servise.createStars(100);
-                var view = astroView(astroModule, servise, interfase);
-                view.viewStars(3, 7);
-            });
-        }
-    }
-}
-
-function Interfase() {
-    messageContainer.addEventListener('click', function () {
-        messageContainer.style.display = 'none'
+    var overlays = document.getElementsByClassName('overlay');
+    Array.prototype.forEach.call(overlays, function (el) {
+        el.addEventListener('click', function () {
+            el.style.display = 'none'
+        });
     });
 
-    message.addEventListener('click', function (e) {
-        e.stopPropagation()
+    var eventStops = document.getElementsByClassName('eventStop');
+    Array.prototype.forEach.call(eventStops, function (el) {
+        el.addEventListener('click', function (e) {
+            e.stopPropagation()
+        });
+    });
+
+    menuToggle.addEventListener('click', function () {
+        menuContainer.style.display = 'flex'
+    });
+
+    menuSaveSystem.addEventListener('click', function () {
+        messager.saveToServer();
+    });
+
+    menuDeleteSystem.addEventListener('click', function () {
+        messager.deleteOnServer();
     });
 
     document.body.addEventListener('mousemove', function (e) {
@@ -346,5 +327,150 @@ function Interfase() {
     }
 }
 
-var integr = integrator(AstroSystem, astroService, astroView, Interfase);
-integr.init();
+/*function integrator(AstroSystem, astroService, astroView) {
+    var astroModule = new AstroSystem();
+    var servise = astroService(astroModule);
+
+    return {
+        systemSave: function () {
+            var xhr = new XMLHttpRequest();
+            var body = JSON.stringify(astroModule.getAllStars());
+            xhr.open("POST", '/astro', true);
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.onreadystatechange = function (a) {
+
+            };
+            xhr.send(body);
+        },
+        systemLoad: function () {
+            return new Promise(function (res, rej) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", '/astro', true);
+                xhr.onreadystatechange = function (a) {
+                    if(xhr.readyState == 4) {
+                        if(xhr.response) {
+                            return res(xhr.response)
+                        }
+                        return rej(false)
+                    }
+                };
+                xhr.send();
+            })
+        },
+        systemDelete: function () {
+            var xhr = new XMLHttpRequest();
+            xhr.open("DELETE", '/astro', true);
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.onreadystatechange = function (a) {
+
+            };
+            xhr.send();
+        },
+        init: function () {
+            servise.setSize(window.innerWidth, window.innerHeight);
+            var interfase = Interfase(this);
+            this.systemLoad().then(function (data) {
+                astroModule.systemLoadFromJSON(data);
+                var view = astroView(astroModule, servise, interfase);
+                view.viewStars(3, 7);
+            }, function () {
+                servise.createStars(100);
+                var view = astroView(astroModule, servise, interfase);
+                view.viewStars(3, 7);
+            });
+        }
+    }
+}*/
+
+function Messager(Integrator) {
+    return {
+        saveToServer: function () {
+            var xhr = new XMLHttpRequest();
+            var body = JSON.stringify(Integrator.getAstroSystem().getAllStars());
+            xhr.open("POST", '/astro', true);
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.onreadystatechange = function (a) {
+
+            };
+            xhr.send(body);
+        },
+        loadFromServer: function () {
+            return new Promise(function (res, rej) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", '/astro', true);
+                xhr.onreadystatechange = function (a) {
+                    if(xhr.readyState == 4) {
+                        if(xhr.response) {
+                            return res(xhr.response)
+                        }
+                        return rej(false)
+                    }
+                };
+                xhr.send();
+            })
+        },
+        deleteOnServer: function () {
+            var xhr = new XMLHttpRequest();
+            xhr.open("DELETE", '/astro', true);
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.onreadystatechange = function (a) {
+
+            };
+            xhr.send();
+        }
+    }
+}
+
+function Integrator(AstroSystem, AstroService, AstroViewer, Interface, Messager) {
+    var astroSystem;
+    var astroService;
+    var astroViewer;
+    var interface;
+    var messager;
+
+    var getter = {};
+
+    getter.getAstroSystem = function () {
+        return astroSystem
+    };
+    getter.getAstroService = function () {
+        return astroService
+    };
+    getter.getAstroViewer = function () {
+        return astroViewer
+    };
+    getter.getInterface = function () {
+        return interface
+    };
+    getter.getMessager = function () {
+        return messager;
+    };
+
+    this.render = function () {
+        messager.loadFromServer().then(function (res) {
+            astroSystem.systemLoadFromJSON(res);
+            astroViewer.viewStars(3, 7);
+        }, function (res) {
+            astroService.createStars(100);
+            astroViewer.viewStars(3, 7);
+        })
+    };
+    this.create = function () {
+        astroSystem = new AstroSystem(getter);
+
+        astroService = AstroService(getter);
+        astroService.setSize(window.innerWidth, window.innerHeight);
+
+        messager = Messager(getter);
+
+        astroViewer = AstroViewer(getter);
+        interface = Interface(getter);
+
+        return this
+    };
+
+
+}
+
+var integrator = new Integrator(AstroSystem, AstroService, AstroViewer, Interface, Messager);
+integrator.create().render();

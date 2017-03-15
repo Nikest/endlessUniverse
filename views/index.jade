@@ -5,9 +5,15 @@ block content
     div#generalScreen
 
   div#generalMenu
+    button#menuToggle.button MENU
+    div#menuContainer.overlay
+      nav
+        button#menuSaveSystem.button SAVE SYSTEM
+        button#menuDeleteSystem.button DELETE SYSTEM
 
-  div#messageContainer
-    div#message
+
+  div#messageContainer.overlay(style='display: flex')
+    div#message.eventStop
       h1#messageTitle Endless Universe
       div#messageBody
         p.center

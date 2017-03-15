@@ -7,10 +7,14 @@ body {
 a {
   color: #00B7FF; }
 
-svg {
-  background: #000; }
+.button {
+  background: #585858;
+  padding: 10px 15px;
+  color: #ffffff;
+  border: none;
+  outline: none; }
 
-#messageContainer {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -20,27 +24,28 @@ svg {
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   z-index: 99;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center; }
-  #messageContainer #message {
-    width: 300px;
-    height: auto;
-    color: #fff;
-    background: #000;
-    padding: 0; }
-    #messageContainer #message .center {
-      text-align: center; }
-    #messageContainer #message h1 {
-      text-align: center;
-      background: #585858;
-      padding: 10px;
-      margin: 0; }
-    #messageContainer #message #messageBody {
-      padding: 5px 15px; }
-      #messageContainer #message #messageBody span {
-        color: #eecdff;
-        font-size: 1.3em; }
+
+#messageContainer #message {
+  width: 300px;
+  height: auto;
+  color: #fff;
+  background: #000;
+  padding: 0; }
+  #messageContainer #message .center {
+    text-align: center; }
+  #messageContainer #message h1 {
+    text-align: center;
+    background: #585858;
+    padding: 10px;
+    margin: 0; }
+  #messageContainer #message #messageBody {
+    padding: 5px 15px; }
+    #messageContainer #message #messageBody span {
+      color: #eecdff;
+      font-size: 1.3em; }
 
 #screenContainer {
   position: fixed;
@@ -56,5 +61,23 @@ svg {
     position: absolute;
     top: 0;
     left: 0; }
+
+#generalMenu {
+  position: relative; }
+  #generalMenu #menuToggle {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 9; }
+  #generalMenu #menuContainer nav {
+    background: #000;
+    width: 100vw;
+    height: auto;
+    top: 0;
+    left: 0;
+    position: fixed;
+    text-align: center; }
+    #generalMenu #menuContainer nav button {
+      margin: 15px; }
 
 /*# sourceMappingURL=style.css.map */
