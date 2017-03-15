@@ -20,15 +20,17 @@ svg {
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   z-index: 99;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center; }
   #messageContainer #message {
     width: 300px;
-    height: 450px;
+    height: auto;
     color: #fff;
     background: #000;
     padding: 0; }
+    #messageContainer #message .center {
+      text-align: center; }
     #messageContainer #message h1 {
       text-align: center;
       background: #585858;
