@@ -1,4 +1,5 @@
 function AstroSystem() {
+    var integrator;
     var astroHelper = {
         starClasses: {
             'O': {
@@ -74,6 +75,12 @@ function AstroSystem() {
     }
 
     return {
+        inject: function (Integrator) {
+            integrator = Integrator
+        },
+        init: function () {
+
+        },
         createStar: function (name, type) {
             starsArray.push(new Star(name, type));
             return starsArray[starsArray.length - 1]
@@ -103,14 +110,21 @@ function AstroSystem() {
     }
 }
 
-function AstroService(Integrator) {
-    var astroSystem = Integrator.getAstroSystem();
-
-    var width = 0;
-    var height = 0;
+function AstroService() {
+    var integrator;
+    var astroSystem;
+    var width = window.innerWidth;
+    var height = window.innerHeight;
     var density = 0;
 
     return {
+        inject: function (Integrator) {
+            integrator = Integrator;
+            astroSystem = integrator.getAstroSystem();
+        },
+        init: function () {
+
+        },
         random: function (num) {
             return Math.floor(Math.random() * num)
         },
@@ -166,35 +180,51 @@ function AstroService(Integrator) {
     }
 }
 
-function AstroViewer(Integrator) {
-    var astroSystem = Integrator.getAstroSystem();
-    var astroService = Integrator.getAstroService();
-    var interfase =  Integrator.getInterface();
+function AstroViewer() {
+    var integrator;
+    var astroSystem;
+    var astroService;
+    var interfase;
+    var messager;
 
-    var width = astroService.getSize().width;
-    var height = astroService.getSize().height;
-    var paddindWorld = 100;
+    var width;
+    var height;
+    var paddindWorld;
 
-    var stage = new Konva.Stage({
-        container: 'generalScreen',
-        width: width + (paddindWorld * 4),
-        height: height + (paddindWorld * 4),
-        fill: '#000'
-    });
-    var layer = new Konva.Layer();
-    var background = new Konva.Rect({
-        x: 0,
-        y: 0,
-        width: width + (paddindWorld * 4),
-        height: height + (paddindWorld * 4),
-        fill: '#202020'
-    });
-
-    layer.add(background);
-
-    stage.add(layer);
+    var stage;
+    var layer;
+    var background;
 
     return {
+        inject: function (Integrator) {
+            integrator = Integrator;
+            astroSystem = Integrator.getAstroSystem();
+            astroService = Integrator.getAstroService();
+            interfase =  Integrator.getInterface();
+            messager = Integrator.getMessager();
+        },
+        init: function () {
+            width = astroService.getSize().width;
+            height = astroService.getSize().height;
+            paddindWorld = 100;
+
+            stage = new Konva.Stage({
+                container: 'generalScreen',
+                width: width + (paddindWorld * 4),
+                height: height + (paddindWorld * 4),
+                fill: '#000'
+            });
+            layer = new Konva.Layer();
+            background = new Konva.Rect({
+                x: 0,
+                y: 0,
+                width: width + (paddindWorld * 4),
+                height: height + (paddindWorld * 4),
+                fill: '#202020'
+            });
+            layer.add(background);
+            stage.add(layer);
+        },
         viewStars: function (minView, maxView) {
             var density = astroService.getDensity();
             var stars = astroSystem.getAllStars();
@@ -237,7 +267,7 @@ function AstroViewer(Integrator) {
 
                 (function (starView, starObj) {
                     starView.on('mousedown touchstart', function() {
-                        interfase.sendMessage({
+                        messager.sendInterfaceMessage({
                             title: 'Star: ' + starObj.name,
                             body: ['Class: <span>' + starObj.type + '</span>',
                                 'Temperature: <span>' + starObj.temperature + '</span>K',
@@ -276,46 +306,50 @@ function AstroViewer(Integrator) {
 }
 
 function Interface(Integrator) {
-    var messager = Integrator.getMessager();
-
-    var overlays = document.getElementsByClassName('overlay');
-    Array.prototype.forEach.call(overlays, function (el) {
-        el.addEventListener('click', function () {
-            el.style.display = 'none'
-        });
-    });
-
-    var eventStops = document.getElementsByClassName('eventStop');
-    Array.prototype.forEach.call(eventStops, function (el) {
-        el.addEventListener('click', function (e) {
-            e.stopPropagation()
-        });
-    });
-
-    menuToggle.addEventListener('click', function () {
-        menuContainer.style.display = 'flex'
-    });
-
-    menuSaveSystem.addEventListener('click', function () {
-        messager.saveToServer();
-    });
-
-    menuDeleteSystem.addEventListener('click', function () {
-        messager.deleteOnServer();
-    });
-
-    document.body.addEventListener('mousemove', function (e) {
-        var percentX = (100 / window.innerWidth) * e.screenX;
-        var percentY = (100 / window.innerHeight) * e.screenY;
-
-        var canvasOuterX = generalScreen.clientWidth - window.innerWidth;
-        var canvasOuterY = generalScreen.clientHeight - window.innerHeight - 100;
-
-        generalScreen.style.left = (0 - ((canvasOuterX / 100) * percentX)) + 'px';
-        generalScreen.style.top = (0 - ((canvasOuterY / 100) * percentY)) + 'px';
-    });
+    var messager;
 
     return {
+        inject: function (Integrator) {
+            messager = Integrator.getMessager()
+        },
+        init: function () {
+            var overlays = document.getElementsByClassName('overlay');
+            Array.prototype.forEach.call(overlays, function (el) {
+                el.addEventListener('click', function () {
+                    el.style.display = 'none'
+                });
+            });
+
+            var eventStops = document.getElementsByClassName('eventStop');
+            Array.prototype.forEach.call(eventStops, function (el) {
+                el.addEventListener('click', function (e) {
+                    e.stopPropagation()
+                });
+            });
+
+            menuToggle.addEventListener('click', function () {
+                menuContainer.style.display = 'flex'
+            });
+
+            menuSaveSystem.addEventListener('click', function () {
+                messager.saveToServer();
+            });
+
+            menuDeleteSystem.addEventListener('click', function () {
+                messager.deleteOnServer();
+            });
+
+            document.body.addEventListener('mousemove', function (e) {
+                var percentX = (100 / window.innerWidth) * e.screenX;
+                var percentY = (100 / window.innerHeight) * e.screenY;
+
+                var canvasOuterX = generalScreen.clientWidth - window.innerWidth;
+                var canvasOuterY = generalScreen.clientHeight - window.innerHeight - 100;
+
+                generalScreen.style.left = (0 - ((canvasOuterX / 100) * percentX)) + 'px';
+                generalScreen.style.top = (0 - ((canvasOuterY / 100) * percentY)) + 'px';
+            });
+        },
         sendMessage: function (prop) {
             messageContainer.style.display = 'flex';
             messageTitle.innerText = prop.title;
@@ -327,63 +361,16 @@ function Interface(Integrator) {
     }
 }
 
-/*function integrator(AstroSystem, astroService, astroView) {
-    var astroModule = new AstroSystem();
-    var servise = astroService(astroModule);
+function Messager(Integrator) {
+    var interface;
 
     return {
-        systemSave: function () {
-            var xhr = new XMLHttpRequest();
-            var body = JSON.stringify(astroModule.getAllStars());
-            xhr.open("POST", '/astro', true);
-            xhr.setRequestHeader('Content-type', 'application/json');
-            xhr.onreadystatechange = function (a) {
-
-            };
-            xhr.send(body);
-        },
-        systemLoad: function () {
-            return new Promise(function (res, rej) {
-                var xhr = new XMLHttpRequest();
-                xhr.open("GET", '/astro', true);
-                xhr.onreadystatechange = function (a) {
-                    if(xhr.readyState == 4) {
-                        if(xhr.response) {
-                            return res(xhr.response)
-                        }
-                        return rej(false)
-                    }
-                };
-                xhr.send();
-            })
-        },
-        systemDelete: function () {
-            var xhr = new XMLHttpRequest();
-            xhr.open("DELETE", '/astro', true);
-            xhr.setRequestHeader('Content-type', 'application/json');
-            xhr.onreadystatechange = function (a) {
-
-            };
-            xhr.send();
+        inject: function (Integrator) {
+            interface = Integrator.getInterface()
         },
         init: function () {
-            servise.setSize(window.innerWidth, window.innerHeight);
-            var interfase = Interfase(this);
-            this.systemLoad().then(function (data) {
-                astroModule.systemLoadFromJSON(data);
-                var view = astroView(astroModule, servise, interfase);
-                view.viewStars(3, 7);
-            }, function () {
-                servise.createStars(100);
-                var view = astroView(astroModule, servise, interfase);
-                view.viewStars(3, 7);
-            });
-        }
-    }
-}*/
 
-function Messager(Integrator) {
-    return {
+        },
         saveToServer: function () {
             var xhr = new XMLHttpRequest();
             var body = JSON.stringify(Integrator.getAstroSystem().getAllStars());
@@ -417,6 +404,9 @@ function Messager(Integrator) {
 
             };
             xhr.send();
+        },
+        sendInterfaceMessage: function (data) {
+            interface.sendMessage(data);
         }
     }
 }
@@ -456,15 +446,23 @@ function Integrator(AstroSystem, AstroService, AstroViewer, Interface, Messager)
         })
     };
     this.create = function () {
-        astroSystem = new AstroSystem(getter);
+        astroSystem = new AstroSystem();
+        astroService = AstroService();
+        messager = Messager();
+        astroViewer = AstroViewer();
+        interface = Interface();
 
-        astroService = AstroService(getter);
-        astroService.setSize(window.innerWidth, window.innerHeight);
+        astroSystem.inject(getter);
+        astroService.inject(getter);
+        messager.inject(getter);
+        astroViewer.inject(getter);
+        interface.inject(getter);
 
-        messager = Messager(getter);
-
-        astroViewer = AstroViewer(getter);
-        interface = Interface(getter);
+        astroSystem.init();
+        astroService.init();
+        messager.init();
+        astroViewer.init();
+        interface.init();
 
         return this
     };
