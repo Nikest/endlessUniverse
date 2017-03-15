@@ -5,7 +5,7 @@ var astroSystem;
 
 router.post('/', function(req, res, next) {
     astroSystem = JSON.stringify(req.body);
-    res.send('success');
+    res.send('System saved');
 });
 
 router.get('/', function(req, res, next) {
@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 
 router.delete('/', function (req, res) {
     astroSystem = null;
-    res.send('delete');
+    res.send('System was deleted');
 });
 
 module.exports = router;

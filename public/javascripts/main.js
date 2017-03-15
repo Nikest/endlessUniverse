@@ -332,11 +332,21 @@ function Interface() {
             });
 
             menuSaveSystem.addEventListener('click', function () {
-                messager.saveToServer();
+                messager.saveToServer().then(function (res) {
+                    messager.sendInterfaceMessage({
+                        title: 'Message',
+                        body: ['<p class="center">' + res + '</p>']
+                    })
+                });
             });
 
             menuDeleteSystem.addEventListener('click', function () {
-                messager.deleteOnServer();
+                messager.deleteOnServer().then(function (res) {
+                    messager.sendInterfaceMessage({
+                        title: 'Message',
+                        body: ['<p class="center">' + res + '</p>']
+                    })
+                });
             });
 
             document.body.addEventListener('mousemove', function (e) {
@@ -375,14 +385,22 @@ function Messager() {
             astroSystem = integrator.getAstroSystem();
         },
         saveToServer: function () {
-            var xhr = new XMLHttpRequest();
-            var body = JSON.stringify(astroSystem.getAllStars());
-            xhr.open("POST", '/astro', true);
-            xhr.setRequestHeader('Content-type', 'application/json');
-            xhr.onreadystatechange = function (a) {
+            return new Promise(function (res, rej) {
+                var xhr = new XMLHttpRequest();
+                var body = JSON.stringify(astroSystem.getAllStars());
+                xhr.open("POST", '/astro', true);
+                xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.onreadystatechange = function (a) {
+                    if(xhr.readyState == 4) {
+                        if(xhr.response) {
+                            return res(xhr.response)
+                        }
+                        return rej(false)
+                    }
+                };
+                xhr.send(body);
+            });
 
-            };
-            xhr.send(body);
         },
         loadFromServer: function () {
             return new Promise(function (res, rej) {
@@ -400,13 +418,20 @@ function Messager() {
             })
         },
         deleteOnServer: function () {
-            var xhr = new XMLHttpRequest();
-            xhr.open("DELETE", '/astro', true);
-            xhr.setRequestHeader('Content-type', 'application/json');
-            xhr.onreadystatechange = function (a) {
-
-            };
-            xhr.send();
+            return new Promise(function (res, rej) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("DELETE", '/astro', true);
+                xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.onreadystatechange = function (a) {
+                    if(xhr.readyState == 4) {
+                        if(xhr.response) {
+                            return res(xhr.response)
+                        }
+                        return rej(false)
+                    }
+                };
+                xhr.send();
+            })
         },
         sendInterfaceMessage: function (data) {
             interface.sendMessage(data);
