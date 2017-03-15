@@ -106,6 +106,9 @@ function AstroSystem() {
         },
         systemLoadFromJSON: function (json) {
             starsArray = JSON.parse(json)
+        },
+        starsClear: function () {
+            starsArray = [];
         }
     }
 }
@@ -194,6 +197,7 @@ function AstroViewer() {
     var stage;
     var layer;
     var background;
+    var starsLayer;
 
     return {
         inject: function (Integrator) {
@@ -223,14 +227,22 @@ function AstroViewer() {
                 fill: '#202020'
             });
             layer.add(background);
+            starsLayer = new Konva.Layer({
+                name: 'stars'
+            });
+            console.log(starsLayer);
             stage.add(layer);
+        },
+        getStarsLayer: function () {
+            return starsLayer
+        },
+        getStage: function () {
+            return stage
         },
         viewStars: function (minView, maxView) {
             var density = astroService.getDensity();
             var stars = astroSystem.getAllStars();
-            var starsLayer = new Konva.Layer();
             var padding = 20;
-
             var maxStarRadius = astroSystem.getStarsRadius().max;
             var minStarRadius = astroSystem.getStarsRadius().min;
             var radiusPercent = (maxStarRadius - minStarRadius) / 100;
@@ -299,7 +311,6 @@ function AstroViewer() {
                     yCounter += density
                 }
             }
-
             stage.add(starsLayer);
         }
     }
@@ -367,6 +378,9 @@ function Interface() {
                 return '<p>' + i + '</p>'
             });
             messageBody.innerHTML = msBody.join('</br>')
+        },
+        getCanvasContainer: function () {
+            return generalScreen
         }
     }
 }
@@ -464,14 +478,22 @@ function Integrator(AstroSystem, AstroService, AstroViewer, Interface, Messager)
         return messager;
     };
 
+    function creator() {
+        astroService.createStars(100);
+        astroViewer.viewStars(3, 7);
+    }
+
     this.render = function () {
         messager.loadFromServer().then(function (res) {
             astroSystem.systemLoadFromJSON(res);
             astroViewer.viewStars(3, 7);
-        }, function (res) {
-            astroService.createStars(100);
-            astroViewer.viewStars(3, 7);
+        }, function () {
+            creator();
         })
+    };
+    this.createNew = function () {
+        astroSystem.starsClear();
+        creator();
     };
     this.create = function () {
         astroSystem = new AstroSystem();
@@ -494,8 +516,6 @@ function Integrator(AstroSystem, AstroService, AstroViewer, Interface, Messager)
 
         return this
     };
-
-
 }
 
 var integrator = new Integrator(AstroSystem, AstroService, AstroViewer, Interface, Messager);
