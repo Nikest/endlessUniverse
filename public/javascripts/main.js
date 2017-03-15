@@ -94,8 +94,11 @@ function AstroSystem() {
                 min: astroHelper.minStarRadius
             }
         },
-        getStarByName: function (name) {
-            
+        systemSaveToJSON: function () {
+            return JSON.stringify(starsArray)
+        },
+        systemLoadFromJSON: function (json) {
+            starsArray = JSON.parse(json)
         }
     }
 }
@@ -197,9 +200,24 @@ function astroView(astroModule, servise) {
             var yCounter = 0;
 
             for(var s = 0; s < stars.length; s++) {
-                var xCoord = xCounter + servise.random(density / 0.4);
-                var yCoord = yCounter + servise.random(density);
+                var xCoord;
+                if(!stars[s].x) {
+                    xCoord = xCounter + servise.random(density / 0.4);
+                    stars[s].x = xCoord;
+                } else {
+                    xCoord = stars[s].x
+                }
+
+                var yCoord;
+                if(!stars[s].y) {
+                    yCoord = yCounter + servise.random(density / 0.4);
+                    stars[s].y = yCoord;
+                } else {
+                    yCoord = stars[s].y
+                }
+
                 var radius = ((maxView - minView) / 100) * (stars[s].radius / radiusPercent) + minView;
+
                 var star = new Konva.Circle({
                     x: xCoord,
                     y: yCoord,
@@ -241,15 +259,50 @@ function astroView(astroModule, servise) {
     }
 }
 
-var astroModule = new AstroSystem();
+function integrator(AstroSystem, astroService, astroView) {
+    var astroModule = new AstroSystem();
+    var servise = astroService(astroModule);
 
-var servise = astroService(astroModule);
-servise.setSize(window.innerWidth, window.innerHeight);
-servise.createStars(100);
+    return {
+        systemSave: function () {
+            var xhr = new XMLHttpRequest();
+            var body = JSON.stringify(astroModule.getAllStars());
+            xhr.open("POST", '/save', true);
+            xhr.setRequestHeader('Content-type', 'application/json');
+            xhr.onreadystatechange = function (a) {
 
-var view = astroView(astroModule, servise);
-view.viewStars(3, 7);
+            };
+            xhr.send(body);
+        },
+        systemLoad: function () {
+            return new Promise(function (res, rej) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", '/load', true);
+                xhr.onreadystatechange = function (a) {
+                    if(xhr.readyState == 4) {
+                        if(xhr.response) {
+                            return res(xhr.response)
+                        }
+                        return rej(false)
+                    }
+                };
+                xhr.send();
+            })
+        },
+        init: function () {
+            servise.setSize(window.innerWidth, window.innerHeight);
+            this.systemLoad().then(function (data) {
+                astroModule.systemLoadFromJSON(data);
+                var view = astroView(astroModule, servise);
+                view.viewStars(3, 7);
+            }, function () {
+                servise.createStars(100);
+                var view = astroView(astroModule, servise);
+                view.viewStars(3, 7);
+            });
+        }
+    }
+}
 
-
-
-
+var integr = integrator(AstroSystem, astroService, astroView);
+integr.init();
