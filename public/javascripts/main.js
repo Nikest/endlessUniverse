@@ -305,7 +305,7 @@ function AstroViewer() {
     }
 }
 
-function Interface(Integrator) {
+function Interface() {
     var messager;
 
     return {
@@ -361,19 +361,22 @@ function Interface(Integrator) {
     }
 }
 
-function Messager(Integrator) {
+function Messager() {
+    var integrator;
     var interface;
+    var astroSystem;
 
     return {
         inject: function (Integrator) {
-            interface = Integrator.getInterface()
+            integrator = Integrator;
         },
         init: function () {
-
+            interface = integrator.getInterface();
+            astroSystem = integrator.getAstroSystem();
         },
         saveToServer: function () {
             var xhr = new XMLHttpRequest();
-            var body = JSON.stringify(Integrator.getAstroSystem().getAllStars());
+            var body = JSON.stringify(astroSystem.getAllStars());
             xhr.open("POST", '/astro', true);
             xhr.setRequestHeader('Content-type', 'application/json');
             xhr.onreadystatechange = function (a) {
