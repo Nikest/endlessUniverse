@@ -230,7 +230,6 @@ function AstroViewer() {
     var paddindWorld;
 
     var stage;
-    var layer;
     var background;
     var generalLayer;
     var waiting;
@@ -257,21 +256,12 @@ function AstroViewer() {
                 container: 'generalScreen',
                 width: width + (paddindWorld * 4),
                 height: height + (paddindWorld * 4),
-                fill: '#000'
-            });
-            layer = new Konva.Layer();
-            background = new Konva.Rect({
-                x: 0,
-                y: 0,
-                width: width + (paddindWorld * 4),
-                height: height + (paddindWorld * 4),
                 fill: '#202020'
             });
-            layer.add(background);
+
             generalLayer = new Konva.Layer({
-                name: 'stars'
+                name: 'general'
             });
-            stage.add(layer);
         },
         getGeneralLayer: function () {
             return generalLayer
@@ -281,6 +271,15 @@ function AstroViewer() {
         },
         viewStarsCluster: function (min, max) { console.log('stars cluster');
             generalLayer.destroy();
+            background = new Konva.Rect({
+                x: 0,
+                y: 0,
+                width: width + (paddindWorld * 4),
+                height: height + (paddindWorld * 4),
+                fill: '#202020'
+            });
+            generalLayer.add(background);
+
             var minView = 3;
             var maxView = 7;
             var density = astroService.getDensity();
@@ -375,6 +374,15 @@ function AstroViewer() {
         },
         viewStarsSystem: function () {
             generalLayer.destroy();
+            background = new Konva.Rect({
+                x: 0,
+                y: 0,
+                width: width + (paddindWorld * 4),
+                height: height + (paddindWorld * 4),
+                fill: '#202020'
+            });
+            generalLayer.add(background);
+
             var density = astroService.getDensity();
             var maxView = 100;
             var minView = 10;
@@ -520,6 +528,14 @@ function Interface() {
 
             menuLoadSystem.addEventListener('click', function () {
                 integrator.loadSystem();
+            });
+
+            menuScreenShot.addEventListener('click', function () {
+                var canvas = document.querySelectorAll('#generalScreen canvas')[0];
+                var download = document.createElement('a');
+                download.href = canvas.toDataURL("image/jpeg");
+                download.download = 'screen.jpg';
+                download.click();
             });
 
             document.body.addEventListener('mousemove', function (e) {
