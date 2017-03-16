@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.delete('/', function (req, res) {
-    astroSystem = null;
+    jsonfile.writeFileSync(file, null, {spaces: 2});
     res.send('System was deleted');
 });
 

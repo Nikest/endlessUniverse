@@ -63,7 +63,7 @@ function AstroSystem() {
 
     function Star(name, type) {
         var typeParse = type.split('');
-
+        this.id = Math.floor(Math.random() * 100000);
         this.astroType = 'Star';
         this.name = name;
         this.type = type;
@@ -72,6 +72,13 @@ function AstroSystem() {
         this.lum = astroHelper.getProperty(astroHelper.starClasses[typeParse[0]].lum, typeParse[1]);
         this.radius = astroHelper.getProperty(astroHelper.starClasses[typeParse[0]].radius, typeParse[1]);
         this.mass = astroHelper.getProperty(astroHelper.starClasses[typeParse[0]].mass, typeParse[1]);
+        this.orbits = [];
+    }
+
+    function Planet(starID, name) {
+        this.astroType = 'Planet';
+        this.name = name;
+        this.starID = starID;
     }
 
     return {
@@ -90,7 +97,7 @@ function AstroSystem() {
         },
         getStarClasses: function () {
             var arr = [];
-            for(var c in astroHelper.starClasses) {
+            for (var c in astroHelper.starClasses) {
                 arr.push(c)
             }
             return arr
@@ -109,6 +116,18 @@ function AstroSystem() {
         },
         starsClear: function () {
             starsArray = [];
+        },
+        getStarByID: function (id) {
+            return new Promise(function (res) {
+                for (var s = 0; s < starsArray.length; s++) {
+                    if (starsArray[s].id == id) {
+                        res(starsArray[s])
+                    }
+                }
+            });
+        },
+        createPlanet: function (starID, name) {
+            return new Planet(starID, name)
         }
     }
 }
@@ -144,41 +163,54 @@ function AstroService() {
         getDensity: function () {
             return density
         },
-        nameCreator: function() {
+        nameCreator: function () {
             var particles =
                 ['re', 'te', 'de', 'ge', 'je', 'ke', 'le', 'ce', 've', 'be', 'ne', 'me', 'ru', 'tu', 'du', 'gu', 'ju', 'ku',
-                'lu', 'cu', 'vu', 'bu', 'nu', 'mu', 'ro', 'to', 'do', 'go', 'jo', 'ko', 'lo', 'co', 'vo', 'bo', 'no',
-                'mo', 'ra', 'ta', 'da', 'ga', 'ja', 'ka', 'la', 'ca', 'va', 'ba', 'na', 'ma', 'fe', 'fo', 'fa', 'fi',
-                'war', 'tar', 'bar', 'gar', 'har', 'kar', 'par', 'car', 'nar', 'mar', 'zar', 'a', 'o', 'u', 'i', 'e',
-                'u', 'astar', 'ostar', 'vastar', 'istar', 'ustar', 'estar', 'zar', 'zor', 'zir', 'zer', 'zur', 'bar',
-                'mar', 'nar', 'zan', 'zon', 'zun', 'zen', 'zin', 'ard', 'ord', 'urd', 'ird', 'kurd', 'kord', 'kird',
-                'kerd', 'zam', 'zom', 'zum', 'zem', 'zim', 'and', 'ond', 'und', 'ind', 'burd', 'bord', 'bird', 'berd',
-                'fast', 'mast', 'bast', 'alo', 'ala', 'alu', 'ali', 'olo', 'ola', 'olu', 'oli', 'jar', 'jor', 'jur',
-                'jir', 'jer', 'ari', 'ori', 'uri', 'eri', 'thor', 'tpor', 'tbor', 'tmor', 'tsor', 'zif', 'zuf', 'zef',
-                'zaf', 'zair', 'zeir', 'zoir', 'zuir', 'nipal', 'nopal', 'napal', 'nupal', 'argan', 'argon', 'argun',
-                'argin', 'ora', 'ara', 'oru', 'ori'];
+                    'lu', 'cu', 'vu', 'bu', 'nu', 'mu', 'ro', 'to', 'do', 'go', 'jo', 'ko', 'lo', 'co', 'vo', 'bo', 'no',
+                    'mo', 'ra', 'ta', 'da', 'ga', 'ja', 'ka', 'la', 'ca', 'va', 'ba', 'na', 'ma', 'fe', 'fo', 'fa', 'fi',
+                    'war', 'tar', 'bar', 'gar', 'har', 'kar', 'par', 'car', 'nar', 'mar', 'zar', 'a', 'o', 'u', 'i', 'e',
+                    'u', 'astar', 'ostar', 'vastar', 'istar', 'ustar', 'estar', 'zar', 'zor', 'zir', 'zer', 'zur', 'bar',
+                    'mar', 'nar', 'zan', 'zon', 'zun', 'zen', 'zin', 'ard', 'ord', 'urd', 'ird', 'kurd', 'kord', 'kird',
+                    'kerd', 'zam', 'zom', 'zum', 'zem', 'zim', 'and', 'ond', 'und', 'ind', 'burd', 'bord', 'bird', 'berd',
+                    'fast', 'mast', 'bast', 'alo', 'ala', 'alu', 'ali', 'olo', 'ola', 'olu', 'oli', 'jar', 'jor', 'jur',
+                    'jir', 'jer', 'ari', 'ori', 'uri', 'eri', 'thor', 'tpor', 'tbor', 'tmor', 'tsor', 'zif', 'zuf', 'zef',
+                    'zaf', 'zair', 'zeir', 'zoir', 'zuir', 'nipal', 'nopal', 'napal', 'nupal', 'argan', 'argon', 'argun',
+                    'argin', 'ora', 'ara', 'oru', 'ori'];
             var nameLength = (Math.floor(Math.random() * 4)) + 1;
             var name = '';
-            for(var i = 0; i < nameLength; i++) {
+            for (var i = 0; i < nameLength; i++) {
                 name = name + particles[Math.floor(Math.random() * particles.length)];
-                if(name.length > 9) break
+                if (name.length > 9) break
             }
-            if(name.length <= 2) {
+            if (name.length <= 2) {
                 return this.nameCreator()
             }
-            return name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); }).slice(0,10);
+            return name.replace(/(?:^|\s)\S/g, function (a) {
+                return a.toUpperCase();
+            }).slice(0, 10);
         },
         createStars: function (dens) {
             density = dens;
             var num = (width / density) * (height / density);
 
             var types = astroSystem.getStarClasses();
+
             function getRandomStarType() {
                 return types[(Math.floor(Math.random() * types.length))] + '' + (Math.floor(Math.random() * 10))
             }
-            for(var i = 0; i < num; i++) {
+
+            for (var i = 0; i < num; i++) {
                 astroSystem.createStar(this.nameCreator(), getRandomStarType())
             }
+        },
+        createPlanetsForStar: function (id) {
+            var that = this;
+            var planetCount = Math.floor(Math.random() * 12) + 3;
+            astroSystem.getStarByID(id).then(function (star) {
+                for (var i = 0; i < planetCount; i++) {
+                    star.orbits.push(astroSystem.createPlanet(star.id, that.nameCreator()))
+                }
+            })
         }
     }
 }
@@ -204,7 +236,7 @@ function AstroViewer() {
             integrator = Integrator;
             astroSystem = Integrator.getAstroSystem();
             astroService = Integrator.getAstroService();
-            interfase =  Integrator.getInterface();
+            interfase = Integrator.getInterface();
             messager = Integrator.getMessager();
         },
         init: function () {
@@ -249,9 +281,9 @@ function AstroViewer() {
             var xCounter = 0;
             var yCounter = 0;
 
-            for(var s = 0; s < stars.length; s++) {
+            for (var s = 0; s < stars.length; s++) {
                 var xCoord;
-                if(!stars[s].x) {
+                if (!stars[s].x) {
                     xCoord = (xCounter + astroService.random(density / 0.4)) + paddindWorld;
                     stars[s].x = xCoord;
                 } else {
@@ -259,7 +291,7 @@ function AstroViewer() {
                 }
 
                 var yCoord;
-                if(!stars[s].y) {
+                if (!stars[s].y) {
                     yCoord = (yCounter + astroService.random(density / 0.4)) + paddindWorld;
                     stars[s].y = yCoord;
                 } else {
@@ -278,16 +310,19 @@ function AstroViewer() {
                 var toMsg = stars[s].name + ' ' + stars[s].type;
 
                 (function (starView, starObj) {
-                    starView.on('mousedown touchstart', function() {
+                    if (starObj.orbits.length == 0) {
+                        astroService.createPlanetsForStar(starObj.id)
+                    }
+                    starView.on('mousedown touchstart', function () {
                         messager.sendInterfaceMessage({
                             title: 'Star: ' + starObj.name,
                             body: ['Class: <span>' + starObj.type + '</span>',
                                 'Temperature: <span>' + starObj.temperature + '</span>K',
                                 'Mass: <span>' + starObj.mass + '</span> in solar mass',
                                 'Radius: <span>' + starObj.radius + '</span> in solar radius',
-                                'Luminisity: <span>' + starObj.lum + '</span> in solar luminisity']
+                                'Luminisity: <span>' + starObj.lum + '</span> in solar luminisity',
+                                'Have <span>' + starObj.orbits.length + '</span> planets']
                         });
-                        console.log(starObj)
                     });
                 })(star, stars[s]);
 
@@ -303,7 +338,7 @@ function AstroViewer() {
                 generalLayer.add(star);
                 generalLayer.add(title);
 
-                if(xCounter < (width - density - padding)) {
+                if (xCounter < (width - density - padding)) {
                     xCounter += density;
                 } else {
                     xCounter = 0;
@@ -414,8 +449,8 @@ function Messager() {
                 xhr.open("POST", '/astro', true);
                 xhr.setRequestHeader('Content-type', 'application/json');
                 xhr.onreadystatechange = function (a) {
-                    if(xhr.readyState == 4) {
-                        if(xhr.response) {
+                    if (xhr.readyState == 4) {
+                        if (xhr.response) {
                             return res(xhr.response)
                         }
                         return rej(false)
@@ -430,8 +465,8 @@ function Messager() {
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", '/astro', true);
                 xhr.onreadystatechange = function (a) {
-                    if(xhr.readyState == 4) {
-                        if(xhr.response) {
+                    if (xhr.readyState == 4) {
+                        if (xhr.response) {
                             return res(xhr.response)
                         }
                         return rej(false)
@@ -446,8 +481,8 @@ function Messager() {
                 xhr.open("DELETE", '/astro', true);
                 xhr.setRequestHeader('Content-type', 'application/json');
                 xhr.onreadystatechange = function (a) {
-                    if(xhr.readyState == 4) {
-                        if(xhr.response) {
+                    if (xhr.readyState == 4) {
+                        if (xhr.response) {
                             return res(xhr.response)
                         }
                         return rej(false)
@@ -535,6 +570,9 @@ function Integrator(AstroSystem, AstroService, AstroViewer, Interface, Messager)
 
         return this
     };
+    this.debug = function () {
+        return getter
+    }
 }
 
 var integrator = new Integrator(AstroSystem, AstroService, AstroViewer, Interface, Messager);
