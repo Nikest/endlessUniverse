@@ -205,12 +205,15 @@ function AstroService() {
         },
         createPlanetsForStar: function (id) {
             var that = this;
-            var planetCount = Math.floor(Math.random() * 12) + 3;
-            astroSystem.getStarByID(id).then(function (star) {
-                for (var i = 0; i < planetCount; i++) {
-                    star.orbits.push(astroSystem.createPlanet(star.id, that.nameCreator()))
-                }
-            })
+            return new Promise(function (res) {
+                var planetCount = Math.floor(Math.random() * 12) + 3;
+                astroSystem.getStarByID(id).then(function (star) {
+                    for (var i = 0; i < planetCount; i++) {
+                        star.orbits.push(astroSystem.createPlanet(star.id, that.nameCreator()))
+                    }
+                    res()
+                })
+            });
         }
     }
 }
@@ -230,6 +233,7 @@ function AstroViewer() {
     var layer;
     var background;
     var generalLayer;
+    var waiting;
 
     return {
         inject: function (Integrator) {
@@ -240,6 +244,11 @@ function AstroViewer() {
             messager = Integrator.getMessager();
         },
         init: function () {
+            waiting = {
+                star: null,
+                planet: null,
+                moon: null
+            };
             width = astroService.getSize().width;
             height = astroService.getSize().height;
             paddindWorld = 100;
@@ -270,8 +279,10 @@ function AstroViewer() {
         getStage: function () {
             return stage
         },
-        viewStars: function (minView, maxView) {
+        viewStarsCluster: function (min, max) { console.log('stars cluster');
             generalLayer.destroy();
+            var minView = 3;
+            var maxView = 7;
             var density = astroService.getDensity();
             var stars = astroSystem.getAllStars();
             var padding = 20;
@@ -310,19 +321,33 @@ function AstroViewer() {
                 var toMsg = stars[s].name + ' ' + stars[s].type;
 
                 (function (starView, starObj) {
-                    if (starObj.orbits.length == 0) {
-                        astroService.createPlanetsForStar(starObj.id)
-                    }
                     starView.on('mousedown touchstart', function () {
-                        messager.sendInterfaceMessage({
-                            title: 'Star: ' + starObj.name,
-                            body: ['Class: <span>' + starObj.type + '</span>',
-                                'Temperature: <span>' + starObj.temperature + '</span>K',
-                                'Mass: <span>' + starObj.mass + '</span> in solar mass',
-                                'Radius: <span>' + starObj.radius + '</span> in solar radius',
-                                'Luminisity: <span>' + starObj.lum + '</span> in solar luminisity',
-                                'Have <span>' + starObj.orbits.length + '</span> planets']
-                        });
+                        function sendMessage() {
+                            waiting.star = starObj;
+                            messager.sendInterfaceMessage({
+                                title: 'Star: ' + starObj.name,
+                                body: ['Class: <span>' + starObj.type + '</span>',
+                                    'Temperature: <span>' + starObj.temperature + '</span>K',
+                                    'Mass: <span>' + starObj.mass + '</span> in solar mass',
+                                    'Radius: <span>' + starObj.radius + '</span> in solar radius',
+                                    'Luminisity: <span>' + starObj.lum + '</span> in solar luminisity',
+                                    'Have <span>' + starObj.orbits.length + '</span> planets'],
+                                control: {
+                                    module: 'AstroViewer',
+                                    method: 'viewStarsSystem',
+                                    text: 'Enter to '+ starObj.name +' System'
+                                }
+                            });
+                        }
+
+                        if (starObj.orbits.length == 0) {
+                            astroService.createPlanetsForStar(starObj.id).then(function () {
+                                sendMessage();
+                            });
+                            return
+                        }
+
+                        sendMessage();
                     });
                 })(star, stars[s]);
 
@@ -331,6 +356,7 @@ function AstroViewer() {
                     y: yCoord + radius + 3,
                     text: stars[s].name,
                     fontSize: 10,
+                    align: 'center',
                     fontFamily: 'Verdana, sans-serif',
                     fill: '#fff'
                 });
@@ -345,6 +371,98 @@ function AstroViewer() {
                     yCounter += density
                 }
             }
+            stage.add(generalLayer);
+        },
+        viewStarsSystem: function () {
+            generalLayer.destroy();
+            var density = astroService.getDensity();
+            var maxView = 100;
+            var minView = 10;
+            var padding = 20;
+            var maxStarRadius = astroSystem.getStarsRadius().max;
+            var minStarRadius = astroSystem.getStarsRadius().min;
+            var radiusPercent = (maxStarRadius - minStarRadius) / 100;
+            var radiusStar = 50; //((maxView - minView) / 100) * (waiting.star.radius / radiusPercent) + minView;
+            var radiusPlanet = 20;
+            var systemCenter = {
+                x: stage.attrs.width / 2,
+                y: stage.attrs.height / 2
+            };
+
+            var star = new Konva.Circle({
+                x: paddindWorld + radiusStar,
+                y: systemCenter.y,
+                radius: radiusStar,
+                fill: waiting.star.color
+            });
+
+            (function (starView, starObj) {
+                starView.on('mousedown touchstart', function () {
+                    function sendMessage() {
+                        waiting.star = starObj;
+                        messager.sendInterfaceMessage({
+                            title: 'Star: ' + starObj.name,
+                            body: ['Class: <span>' + starObj.type + '</span>',
+                                'Temperature: <span>' + starObj.temperature + '</span>K',
+                                'Mass: <span>' + starObj.mass + '</span> in solar mass',
+                                'Radius: <span>' + starObj.radius + '</span> in solar radius',
+                                'Luminisity: <span>' + starObj.lum + '</span> in solar luminisity',
+                                'Have <span>' + starObj.orbits.length + '</span> planets'],
+                            control: {
+                                module: 'AstroViewer',
+                                method: 'viewStarsCluster',
+                                text: 'Return to stars cluster'
+                            }
+                        });
+                    }
+
+                    if (starObj.orbits.length == 0) {
+                        astroService.createPlanetsForStar(starObj.id).then(function () {
+                            sendMessage();
+                        });
+                        return
+                    }
+
+                    sendMessage();
+                });
+            })(star, waiting.star);
+
+            var title = new Konva.Text({
+                x: paddindWorld  + radiusStar,
+                y: systemCenter.y + radiusStar + 10,
+                text: waiting.star.name,
+                fontSize: 20,
+                align: 'center',
+                fontFamily: 'Verdana, sans-serif',
+                fill: '#fff'
+            });
+
+            generalLayer.add(star);
+            generalLayer.add(title);
+
+            for(var p = 0; p < waiting.star.orbits.length; p++) {
+                var planetX = paddindWorld + radiusStar + radiusPlanet + ((p + 1) * 100);
+                var planet = new Konva.Circle({
+                    x: planetX,
+                    y: systemCenter.y,
+                    radius: radiusPlanet,
+                    fill: '#a83f1f'
+                });
+
+                var planetTitle = new Konva.Text({
+                    x: planetX,
+                    y: systemCenter.y + radiusPlanet + 10,
+                    text: waiting.star.orbits[p].name,
+                    fontSize: 10,
+                    align: 'center',
+                    fontFamily: 'Verdana, sans-serif',
+                    fill: '#fff'
+                });
+
+                generalLayer.add(planetTitle);
+                generalLayer.add(planet);
+            }
+
             stage.add(generalLayer);
         }
     }
@@ -421,7 +539,19 @@ function Interface() {
             var msBody = prop.body.map(function (i) {
                 return '<p>' + i + '</p>'
             });
-            messageBody.innerHTML = msBody.join('</br>')
+            messageBody.innerHTML = msBody.join('</br>');
+            if(prop.control) {
+                var button = document.createElement('button');
+                button.innerText = prop.control.text;
+                button.classList.add('controlButton');
+                button.addEventListener('click', function () {
+                    var event = document.createEvent('Event');
+                    event.initEvent('click', true, true);
+                    messageContainer.dispatchEvent(event);
+                    integrator['get' + prop.control.module]()[prop.control.method]()
+                });
+                messageBody.appendChild(button);
+            }
         },
         getCanvasContainer: function () {
             return generalScreen
@@ -531,13 +661,13 @@ function Integrator(AstroSystem, AstroService, AstroViewer, Interface, Messager)
 
     function creator() {
         astroService.createStars(100);
-        astroViewer.viewStars(3, 7);
+        astroViewer.viewStarsCluster(3, 7);
     }
 
     function loader() {
         messager.loadFromServer().then(function (res) {
             astroSystem.systemLoadFromJSON(res);
-            astroViewer.viewStars(3, 7);
+            astroViewer.viewStarsCluster(3, 7);
         }, function () {
             creator();
         })

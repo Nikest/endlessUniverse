@@ -1,1 +1,1507 @@
-null
+[
+  {
+    "id": 37569,
+    "astroType": "Star",
+    "name": "Indarazir",
+    "type": "K6",
+    "temperature": 4300,
+    "color": "#fcb16e",
+    "lum": 0.29,
+    "radius": 0.8,
+    "mass": 0.59,
+    "orbits": [],
+    "x": 209,
+    "y": 145
+  },
+  {
+    "id": 79693,
+    "astroType": "Star",
+    "name": "Koaraa",
+    "type": "A4",
+    "temperature": 9000,
+    "color": "#f8f8fc",
+    "lum": 17,
+    "radius": 1.64,
+    "mass": 1.82,
+    "orbits": [],
+    "x": 270,
+    "y": 101
+  },
+  {
+    "id": 22393,
+    "astroType": "Star",
+    "name": "Mudojurird",
+    "type": "B5",
+    "temperature": 20000,
+    "color": "#c1e8fc",
+    "lum": 27.5,
+    "radius": 4.2,
+    "mass": 9.05,
+    "orbits": [],
+    "x": 451,
+    "y": 273
+  },
+  {
+    "id": 65492,
+    "astroType": "Star",
+    "name": "Arganlanap",
+    "type": "A0",
+    "temperature": 10000,
+    "color": "#f8f8fc",
+    "lum": 25,
+    "radius": 1.8,
+    "mass": 2.1,
+    "orbits": [],
+    "x": 473,
+    "y": 232
+  },
+  {
+    "id": 89337,
+    "astroType": "Star",
+    "name": "Zefba",
+    "type": "F0",
+    "temperature": 7500,
+    "color": "#fcfbec",
+    "lum": 5,
+    "radius": 1.4,
+    "mass": 1.4,
+    "orbits": [
+      {
+        "astroType": "Planet",
+        "name": "Jortaori",
+        "starID": 89337
+      },
+      {
+        "astroType": "Planet",
+        "name": "Napalnupal",
+        "starID": 89337
+      },
+      {
+        "astroType": "Planet",
+        "name": "Zomari",
+        "starID": 89337
+      },
+      {
+        "astroType": "Planet",
+        "name": "Nadoku",
+        "starID": 89337
+      },
+      {
+        "astroType": "Planet",
+        "name": "Zormevaara",
+        "starID": 89337
+      },
+      {
+        "astroType": "Planet",
+        "name": "Zemdo",
+        "starID": 89337
+      }
+    ],
+    "x": 649,
+    "y": 147
+  },
+  {
+    "id": 32255,
+    "astroType": "Star",
+    "name": "Ind",
+    "type": "G9",
+    "temperature": 5280,
+    "color": "#fcf9a6",
+    "lum": 0.69,
+    "radius": 0.98,
+    "mass": 0.86,
+    "orbits": [
+      {
+        "astroType": "Planet",
+        "name": "Toe",
+        "starID": 32255
+      },
+      {
+        "astroType": "Planet",
+        "name": "Tborolafa",
+        "starID": 32255
+      },
+      {
+        "astroType": "Planet",
+        "name": "Teduzirast",
+        "starID": 32255
+      },
+      {
+        "astroType": "Planet",
+        "name": "Zemolazefp",
+        "starID": 32255
+      },
+      {
+        "astroType": "Planet",
+        "name": "Zorvegarjo",
+        "starID": 32255
+      },
+      {
+        "astroType": "Planet",
+        "name": "Dajirga",
+        "starID": 32255
+      },
+      {
+        "astroType": "Planet",
+        "name": "Obirdzuirr",
+        "starID": 32255
+      },
+      {
+        "astroType": "Planet",
+        "name": "Thorlonarj",
+        "starID": 32255
+      }
+    ],
+    "x": 795,
+    "y": 119
+  },
+  {
+    "id": 12220,
+    "astroType": "Star",
+    "name": "Lolu",
+    "type": "G5",
+    "temperature": 5600,
+    "color": "#fcf9a6",
+    "lum": 1.05,
+    "radius": 1.05,
+    "mass": 1.1,
+    "orbits": [],
+    "x": 764,
+    "y": 325
+  },
+  {
+    "id": 40148,
+    "astroType": "Star",
+    "name": "Zef",
+    "type": "A1",
+    "temperature": 9750,
+    "color": "#f8f8fc",
+    "lum": 23,
+    "radius": 1.76,
+    "mass": 2.03,
+    "orbits": [],
+    "x": 1049,
+    "y": 244
+  },
+  {
+    "id": 16333,
+    "astroType": "Star",
+    "name": "Zairjarjor",
+    "type": "B2",
+    "temperature": 26000,
+    "color": "#c1e8fc",
+    "lum": 29,
+    "radius": 5.64,
+    "mass": 13.22,
+    "orbits": [],
+    "x": 1004,
+    "y": 328
+  },
+  {
+    "id": 30017,
+    "astroType": "Star",
+    "name": "Burdoluma",
+    "type": "O4",
+    "temperature": 42000,
+    "color": "#66c0fc",
+    "lum": 42,
+    "radius": 7.44,
+    "mass": 25.6,
+    "orbits": [],
+    "x": 1009,
+    "y": 294
+  },
+  {
+    "id": 52356,
+    "astroType": "Star",
+    "name": "Barcekord",
+    "type": "M3",
+    "temperature": 3310,
+    "color": "#fc602d",
+    "lum": 0.07,
+    "radius": 0.61,
+    "mass": 0.34,
+    "orbits": [
+      {
+        "astroType": "Planet",
+        "name": "Alo",
+        "starID": 52356
+      },
+      {
+        "astroType": "Planet",
+        "name": "Argonzoirm",
+        "starID": 52356
+      },
+      {
+        "astroType": "Planet",
+        "name": "Zon",
+        "starID": 52356
+      },
+      {
+        "astroType": "Planet",
+        "name": "Par",
+        "starID": 52356
+      },
+      {
+        "astroType": "Planet",
+        "name": "Ezuirfe",
+        "starID": 52356
+      },
+      {
+        "astroType": "Planet",
+        "name": "Nuluolound",
+        "starID": 52356
+      }
+    ],
+    "x": 1157,
+    "y": 329
+  },
+  {
+    "id": 4144,
+    "astroType": "Star",
+    "name": "Zunarigoar",
+    "type": "M1",
+    "temperature": 3570,
+    "color": "#fc602d",
+    "lum": 0.08,
+    "radius": 0.67,
+    "mass": 0.41,
+    "orbits": [],
+    "x": 1364,
+    "y": 291
+  },
+  {
+    "id": 11565,
+    "astroType": "Star",
+    "name": "Zem",
+    "type": "K2",
+    "temperature": 4900,
+    "color": "#fcb16e",
+    "lum": 0.5,
+    "radius": 0.91,
+    "mass": 0.73,
+    "orbits": [],
+    "x": 1345,
+    "y": 191
+  },
+  {
+    "id": 97915,
+    "astroType": "Star",
+    "name": "Vastaraliz",
+    "type": "B8",
+    "temperature": 14000,
+    "color": "#c1e8fc",
+    "lum": 26,
+    "radius": 2.76,
+    "mass": 4.88,
+    "orbits": [],
+    "x": 126,
+    "y": 399
+  },
+  {
+    "id": 94459,
+    "astroType": "Star",
+    "name": "Zirmar",
+    "type": "O8",
+    "temperature": 34000,
+    "color": "#66c0fc",
+    "lum": 34,
+    "radius": 6.88,
+    "mass": 19.2,
+    "orbits": [
+      {
+        "astroType": "Planet",
+        "name": "Jerzeir",
+        "starID": 94459
+      },
+      {
+        "astroType": "Planet",
+        "name": "Zafzuirtpo",
+        "starID": 94459
+      },
+      {
+        "astroType": "Planet",
+        "name": "Tmor",
+        "starID": 94459
+      },
+      {
+        "astroType": "Planet",
+        "name": "Onu",
+        "starID": 94459
+      },
+      {
+        "astroType": "Planet",
+        "name": "Donupal",
+        "starID": 94459
+      },
+      {
+        "astroType": "Planet",
+        "name": "Ramar",
+        "starID": 94459
+      },
+      {
+        "astroType": "Planet",
+        "name": "Joundori",
+        "starID": 94459
+      }
+    ],
+    "x": 424,
+    "y": 248
+  },
+  {
+    "id": 45125,
+    "astroType": "Star",
+    "name": "Jaralida",
+    "type": "A6",
+    "temperature": 8500,
+    "color": "#f8f8fc",
+    "lum": 13,
+    "radius": 1.56,
+    "mass": 1.68,
+    "orbits": [],
+    "x": 349,
+    "y": 304
+  },
+  {
+    "id": 99653,
+    "astroType": "Star",
+    "name": "Locarjar",
+    "type": "K4",
+    "temperature": 4600,
+    "color": "#fcb16e",
+    "lum": 0.39,
+    "radius": 0.86,
+    "mass": 0.66,
+    "orbits": [],
+    "x": 556,
+    "y": 273
+  },
+  {
+    "id": 12901,
+    "astroType": "Star",
+    "name": "Gazomrobo",
+    "type": "O8",
+    "temperature": 34000,
+    "color": "#66c0fc",
+    "lum": 34,
+    "radius": 6.88,
+    "mass": 19.2,
+    "orbits": [],
+    "x": 601,
+    "y": 310
+  },
+  {
+    "id": 7679,
+    "astroType": "Star",
+    "name": "Ujobar",
+    "type": "K7",
+    "temperature": 4150,
+    "color": "#fcb16e",
+    "lum": 0.24,
+    "radius": 0.78,
+    "mass": 0.56,
+    "orbits": [],
+    "x": 705,
+    "y": 404
+  },
+  {
+    "id": 42017,
+    "astroType": "Star",
+    "name": "Dazam",
+    "type": "K0",
+    "temperature": 5200,
+    "color": "#fcb16e",
+    "lum": 0.6,
+    "radius": 0.96,
+    "mass": 0.8,
+    "orbits": [],
+    "x": 863,
+    "y": 259
+  },
+  {
+    "id": 40142,
+    "astroType": "Star",
+    "name": "Ame",
+    "type": "K1",
+    "temperature": 5050,
+    "color": "#fcb16e",
+    "lum": 0.55,
+    "radius": 0.93,
+    "mass": 0.77,
+    "orbits": [],
+    "x": 875,
+    "y": 385
+  },
+  {
+    "id": 30746,
+    "astroType": "Star",
+    "name": "Tborzirfo",
+    "type": "O2",
+    "temperature": 46000,
+    "color": "#66c0fc",
+    "lum": 46,
+    "radius": 7.72,
+    "mass": 28.8,
+    "orbits": [],
+    "x": 1101,
+    "y": 439
+  },
+  {
+    "id": 438,
+    "astroType": "Star",
+    "name": "Ledathor",
+    "type": "G1",
+    "temperature": 5920,
+    "color": "#fcf9a6",
+    "lum": 1.41,
+    "radius": 1.13,
+    "mass": 1.34,
+    "orbits": [],
+    "x": 1204,
+    "y": 276
+  },
+  {
+    "id": 15302,
+    "astroType": "Star",
+    "name": "Kuostarker",
+    "type": "G3",
+    "temperature": 5760,
+    "color": "#fcf9a6",
+    "lum": 1.23,
+    "radius": 1.09,
+    "mass": 1.22,
+    "orbits": [],
+    "x": 1277,
+    "y": 420
+  },
+  {
+    "id": 37484,
+    "astroType": "Star",
+    "name": "Zomguto",
+    "type": "A9",
+    "temperature": 7750,
+    "color": "#f8f8fc",
+    "lum": 7,
+    "radius": 1.44,
+    "mass": 1.47,
+    "orbits": [],
+    "x": 1287,
+    "y": 384
+  },
+  {
+    "id": 78786,
+    "astroType": "Star",
+    "name": "Zeftmor",
+    "type": "B0",
+    "temperature": 30000,
+    "color": "#c1e8fc",
+    "lum": 30,
+    "radius": 6.6,
+    "mass": 16,
+    "orbits": [],
+    "x": 1537,
+    "y": 406
+  },
+  {
+    "id": 50608,
+    "astroType": "Star",
+    "name": "Astarargan",
+    "type": "B8",
+    "temperature": 14000,
+    "color": "#c1e8fc",
+    "lum": 26,
+    "radius": 2.76,
+    "mass": 4.88,
+    "orbits": [],
+    "x": 138,
+    "y": 320
+  },
+  {
+    "id": 55906,
+    "astroType": "Star",
+    "name": "Ive",
+    "type": "A4",
+    "temperature": 9000,
+    "color": "#f8f8fc",
+    "lum": 17,
+    "radius": 1.64,
+    "mass": 1.82,
+    "orbits": [],
+    "x": 444,
+    "y": 542
+  },
+  {
+    "id": 78372,
+    "astroType": "Star",
+    "name": "Amecohar",
+    "type": "M2",
+    "temperature": 3440,
+    "color": "#fc602d",
+    "lum": 0.07,
+    "radius": 0.64,
+    "mass": 0.38,
+    "orbits": [
+      {
+        "astroType": "Planet",
+        "name": "Muazeir",
+        "starID": 78372
+      },
+      {
+        "astroType": "Planet",
+        "name": "Garzeirdoz",
+        "starID": 78372
+      },
+      {
+        "astroType": "Planet",
+        "name": "Mastbar",
+        "starID": 78372
+      },
+      {
+        "astroType": "Planet",
+        "name": "Nar",
+        "starID": 78372
+      },
+      {
+        "astroType": "Planet",
+        "name": "Argun",
+        "starID": 78372
+      },
+      {
+        "astroType": "Planet",
+        "name": "Argan",
+        "starID": 78372
+      },
+      {
+        "astroType": "Planet",
+        "name": "Zifwarronu",
+        "starID": 78372
+      },
+      {
+        "astroType": "Planet",
+        "name": "Erikeargan",
+        "starID": 78372
+      },
+      {
+        "astroType": "Planet",
+        "name": "Kordmezufk",
+        "starID": 78372
+      }
+    ],
+    "x": 386,
+    "y": 380
+  },
+  {
+    "id": 2504,
+    "astroType": "Star",
+    "name": "Zar",
+    "type": "O5",
+    "temperature": 40000,
+    "color": "#66c0fc",
+    "lum": 40,
+    "radius": 7.3,
+    "mass": 24,
+    "orbits": [],
+    "x": 512,
+    "y": 362
+  },
+  {
+    "id": 13137,
+    "astroType": "Star",
+    "name": "Ustarcege",
+    "type": "A3",
+    "temperature": 9250,
+    "color": "#f8f8fc",
+    "lum": 19,
+    "radius": 1.68,
+    "mass": 1.89,
+    "orbits": [],
+    "x": 596,
+    "y": 300
+  },
+  {
+    "id": 85279,
+    "astroType": "Star",
+    "name": "Narhar",
+    "type": "G7",
+    "temperature": 5440,
+    "color": "#fcf9a6",
+    "lum": 0.87,
+    "radius": 1.02,
+    "mass": 0.98,
+    "orbits": [],
+    "x": 706,
+    "y": 535
+  },
+  {
+    "id": 61514,
+    "astroType": "Star",
+    "name": "Oluu",
+    "type": "G1",
+    "temperature": 5920,
+    "color": "#fcf9a6",
+    "lum": 1.41,
+    "radius": 1.13,
+    "mass": 1.34,
+    "orbits": [],
+    "x": 840,
+    "y": 343
+  },
+  {
+    "id": 87209,
+    "astroType": "Star",
+    "name": "Indnakirdg",
+    "type": "A7",
+    "temperature": 8250,
+    "color": "#f8f8fc",
+    "lum": 11,
+    "radius": 1.52,
+    "mass": 1.61,
+    "orbits": [],
+    "x": 1016,
+    "y": 485
+  },
+  {
+    "id": 81856,
+    "astroType": "Star",
+    "name": "Domuzin",
+    "type": "O9",
+    "temperature": 32000,
+    "color": "#66c0fc",
+    "lum": 32,
+    "radius": 6.74,
+    "mass": 17.6,
+    "orbits": [],
+    "x": 1042,
+    "y": 546
+  },
+  {
+    "id": 62447,
+    "astroType": "Star",
+    "name": "Martu",
+    "type": "F5",
+    "temperature": 6750,
+    "color": "#fcfbec",
+    "lum": 3.25,
+    "radius": 1.27,
+    "mass": 1.22,
+    "orbits": [],
+    "x": 1219,
+    "y": 529
+  },
+  {
+    "id": 62611,
+    "astroType": "Star",
+    "name": "Garurdnezi",
+    "type": "G0",
+    "temperature": 6000,
+    "color": "#fcf9a6",
+    "lum": 1.5,
+    "radius": 1.15,
+    "mass": 1.4,
+    "orbits": [],
+    "x": 1336,
+    "y": 456
+  },
+  {
+    "id": 4670,
+    "astroType": "Star",
+    "name": "Gargeori",
+    "type": "A2",
+    "temperature": 9500,
+    "color": "#f8f8fc",
+    "lum": 21,
+    "radius": 1.72,
+    "mass": 1.96,
+    "orbits": [],
+    "x": 1200,
+    "y": 354
+  },
+  {
+    "id": 14095,
+    "astroType": "Star",
+    "name": "Kar",
+    "type": "F2",
+    "temperature": 7200,
+    "color": "#fcfbec",
+    "lum": 4.3,
+    "radius": 1.35,
+    "mass": 1.33,
+    "orbits": [],
+    "x": 1537,
+    "y": 423
+  },
+  {
+    "id": 19103,
+    "astroType": "Star",
+    "name": "Zenkeond",
+    "type": "K7",
+    "temperature": 4150,
+    "color": "#fcb16e",
+    "lum": 0.24,
+    "radius": 0.78,
+    "mass": 0.56,
+    "orbits": [],
+    "x": 122,
+    "y": 571
+  },
+  {
+    "id": 2367,
+    "astroType": "Star",
+    "name": "Oli",
+    "type": "A1",
+    "temperature": 9750,
+    "color": "#f8f8fc",
+    "lum": 23,
+    "radius": 1.76,
+    "mass": 2.03,
+    "orbits": [],
+    "x": 250,
+    "y": 515
+  },
+  {
+    "id": 13491,
+    "astroType": "Star",
+    "name": "Beru",
+    "type": "G8",
+    "temperature": 5360,
+    "color": "#fcf9a6",
+    "lum": 0.78,
+    "radius": 1,
+    "mass": 0.92,
+    "orbits": [],
+    "x": 459,
+    "y": 613
+  },
+  {
+    "id": 44558,
+    "astroType": "Star",
+    "name": "Parnuge",
+    "type": "F8",
+    "temperature": 6300,
+    "color": "#fcfbec",
+    "lum": 2.2,
+    "radius": 1.2,
+    "mass": 1.11,
+    "orbits": [],
+    "x": 612,
+    "y": 505
+  },
+  {
+    "id": 5186,
+    "astroType": "Star",
+    "name": "Najaraliku",
+    "type": "M4",
+    "temperature": 3180,
+    "color": "#fc602d",
+    "lum": 0.06,
+    "radius": 0.58,
+    "mass": 0.3,
+    "orbits": [],
+    "x": 748,
+    "y": 532
+  },
+  {
+    "id": 34928,
+    "astroType": "Star",
+    "name": "Nopalburdr",
+    "type": "K1",
+    "temperature": 5050,
+    "color": "#fcb16e",
+    "lum": 0.55,
+    "radius": 0.93,
+    "mass": 0.77,
+    "orbits": [],
+    "x": 752,
+    "y": 622
+  },
+  {
+    "id": 99102,
+    "astroType": "Star",
+    "name": "Istarird",
+    "type": "M8",
+    "temperature": 2660,
+    "color": "#fc602d",
+    "lum": 0.05,
+    "radius": 0.46,
+    "mass": 0.15,
+    "orbits": [],
+    "x": 850,
+    "y": 577
+  },
+  {
+    "id": 15957,
+    "astroType": "Star",
+    "name": "Oruzoirzui",
+    "type": "M8",
+    "temperature": 2660,
+    "color": "#fc602d",
+    "lum": 0.05,
+    "radius": 0.46,
+    "mass": 0.15,
+    "orbits": [],
+    "x": 975,
+    "y": 537
+  },
+  {
+    "id": 5866,
+    "astroType": "Star",
+    "name": "Oli",
+    "type": "O6",
+    "temperature": 38000,
+    "color": "#66c0fc",
+    "lum": 38,
+    "radius": 7.16,
+    "mass": 22.4,
+    "orbits": [],
+    "x": 914,
+    "y": 554
+  },
+  {
+    "id": 48683,
+    "astroType": "Star",
+    "name": "Alamozuirn",
+    "type": "A5",
+    "temperature": 8750,
+    "color": "#f8f8fc",
+    "lum": 15,
+    "radius": 1.6,
+    "mass": 1.75,
+    "orbits": [],
+    "x": 1002,
+    "y": 624
+  },
+  {
+    "id": 20324,
+    "astroType": "Star",
+    "name": "Gozamvabor",
+    "type": "M1",
+    "temperature": 3570,
+    "color": "#fc602d",
+    "lum": 0.08,
+    "radius": 0.67,
+    "mass": 0.41,
+    "orbits": [
+      {
+        "astroType": "Planet",
+        "name": "Tboralaund",
+        "starID": 20324
+      },
+      {
+        "astroType": "Planet",
+        "name": "Nar",
+        "starID": 20324
+      },
+      {
+        "astroType": "Planet",
+        "name": "Undfazufal",
+        "starID": 20324
+      },
+      {
+        "astroType": "Planet",
+        "name": "Urdruzin",
+        "starID": 20324
+      },
+      {
+        "astroType": "Planet",
+        "name": "Vozun",
+        "starID": 20324
+      },
+      {
+        "astroType": "Planet",
+        "name": "Undra",
+        "starID": 20324
+      },
+      {
+        "astroType": "Planet",
+        "name": "Nakirduri",
+        "starID": 20324
+      },
+      {
+        "astroType": "Planet",
+        "name": "Tsorustar",
+        "starID": 20324
+      },
+      {
+        "astroType": "Planet",
+        "name": "Ondzantpor",
+        "starID": 20324
+      },
+      {
+        "astroType": "Planet",
+        "name": "Kar",
+        "starID": 20324
+      },
+      {
+        "astroType": "Planet",
+        "name": "Parno",
+        "starID": 20324
+      },
+      {
+        "astroType": "Planet",
+        "name": "Astarorizu",
+        "starID": 20324
+      },
+      {
+        "astroType": "Planet",
+        "name": "Ariuoru",
+        "starID": 20324
+      }
+    ],
+    "x": 1103,
+    "y": 538
+  },
+  {
+    "id": 61023,
+    "astroType": "Star",
+    "name": "Nipal",
+    "type": "F9",
+    "temperature": 6150,
+    "color": "#fcfbec",
+    "lum": 1.85,
+    "radius": 1.17,
+    "mass": 1.08,
+    "orbits": [],
+    "x": 1436,
+    "y": 427
+  },
+  {
+    "id": 39732,
+    "astroType": "Star",
+    "name": "Arginvasta",
+    "type": "F4",
+    "temperature": 6900,
+    "color": "#fcfbec",
+    "lum": 3.6,
+    "radius": 1.3,
+    "mass": 1.26,
+    "orbits": [],
+    "x": 1381,
+    "y": 405
+  },
+  {
+    "id": 56389,
+    "astroType": "Star",
+    "name": "Urica",
+    "type": "A0",
+    "temperature": 10000,
+    "color": "#f8f8fc",
+    "lum": 25,
+    "radius": 1.8,
+    "mass": 2.1,
+    "orbits": [],
+    "x": 124,
+    "y": 677
+  },
+  {
+    "id": 13855,
+    "astroType": "Star",
+    "name": "Narardmarn",
+    "type": "O1",
+    "temperature": 48000,
+    "color": "#66c0fc",
+    "lum": 48,
+    "radius": 7.86,
+    "mass": 30.4,
+    "orbits": [],
+    "x": 342,
+    "y": 544
+  },
+  {
+    "id": 22382,
+    "astroType": "Star",
+    "name": "Istar",
+    "type": "A3",
+    "temperature": 9250,
+    "color": "#f8f8fc",
+    "lum": 19,
+    "radius": 1.68,
+    "mass": 1.89,
+    "orbits": [],
+    "x": 466,
+    "y": 510
+  },
+  {
+    "id": 97975,
+    "astroType": "Star",
+    "name": "Kird",
+    "type": "M9",
+    "temperature": 2530,
+    "color": "#fc602d",
+    "lum": 0.04,
+    "radius": 0.43,
+    "mass": 0.12,
+    "orbits": [],
+    "x": 611,
+    "y": 534
+  },
+  {
+    "id": 13955,
+    "astroType": "Star",
+    "name": "Alufibebas",
+    "type": "G6",
+    "temperature": 5520,
+    "color": "#fcf9a6",
+    "lum": 0.96,
+    "radius": 1.04,
+    "mass": 1.04,
+    "orbits": [],
+    "x": 707,
+    "y": 606
+  },
+  {
+    "id": 30798,
+    "astroType": "Star",
+    "name": "Zun",
+    "type": "F1",
+    "temperature": 7350,
+    "color": "#fcfbec",
+    "lum": 4.65,
+    "radius": 1.38,
+    "mass": 1.36,
+    "orbits": [],
+    "x": 619,
+    "y": 506
+  },
+  {
+    "id": 55294,
+    "astroType": "Star",
+    "name": "Gevetporda",
+    "type": "B6",
+    "temperature": 18000,
+    "color": "#c1e8fc",
+    "lum": 27,
+    "radius": 3.72,
+    "mass": 7.66,
+    "orbits": [],
+    "x": 708,
+    "y": 645
+  },
+  {
+    "id": 95439,
+    "astroType": "Star",
+    "name": "Cotakirdtb",
+    "type": "G5",
+    "temperature": 5600,
+    "color": "#fcf9a6",
+    "lum": 1.05,
+    "radius": 1.05,
+    "mass": 1.1,
+    "orbits": [],
+    "x": 1047,
+    "y": 620
+  },
+  {
+    "id": 67198,
+    "astroType": "Star",
+    "name": "Ostar",
+    "type": "K5",
+    "temperature": 4450,
+    "color": "#fcb16e",
+    "lum": 0.34,
+    "radius": 0.83,
+    "mass": 0.63,
+    "orbits": [],
+    "x": 947,
+    "y": 726
+  },
+  {
+    "id": 23041,
+    "astroType": "Star",
+    "name": "Kar",
+    "type": "F9",
+    "temperature": 6150,
+    "color": "#fcfbec",
+    "lum": 1.85,
+    "radius": 1.17,
+    "mass": 1.08,
+    "orbits": [],
+    "x": 1197,
+    "y": 521
+  },
+  {
+    "id": 46944,
+    "astroType": "Star",
+    "name": "Gutsor",
+    "type": "F9",
+    "temperature": 6150,
+    "color": "#fcfbec",
+    "lum": 1.85,
+    "radius": 1.17,
+    "mass": 1.08,
+    "orbits": [],
+    "x": 1198,
+    "y": 525
+  },
+  {
+    "id": 77135,
+    "astroType": "Star",
+    "name": "Birdjirtmo",
+    "type": "K4",
+    "temperature": 4600,
+    "color": "#fcb16e",
+    "lum": 0.39,
+    "radius": 0.86,
+    "mass": 0.66,
+    "orbits": [],
+    "x": 1313,
+    "y": 745
+  },
+  {
+    "id": 10568,
+    "astroType": "Star",
+    "name": "Oli",
+    "type": "M8",
+    "temperature": 2660,
+    "color": "#fc602d",
+    "lum": 0.05,
+    "radius": 0.46,
+    "mass": 0.15,
+    "orbits": [],
+    "x": 1493,
+    "y": 687
+  },
+  {
+    "id": 1029,
+    "astroType": "Star",
+    "name": "Marzemzarj",
+    "type": "A7",
+    "temperature": 8250,
+    "color": "#f8f8fc",
+    "lum": 11,
+    "radius": 1.52,
+    "mass": 1.61,
+    "orbits": [],
+    "x": 213,
+    "y": 643
+  },
+  {
+    "id": 3691,
+    "astroType": "Star",
+    "name": "Ojirmujo",
+    "type": "G5",
+    "temperature": 5600,
+    "color": "#fcf9a6",
+    "lum": 1.05,
+    "radius": 1.05,
+    "mass": 1.1,
+    "orbits": [],
+    "x": 355,
+    "y": 799
+  },
+  {
+    "id": 94692,
+    "astroType": "Star",
+    "name": "Zem",
+    "type": "F1",
+    "temperature": 7350,
+    "color": "#fcfbec",
+    "lum": 4.65,
+    "radius": 1.38,
+    "mass": 1.36,
+    "orbits": [],
+    "x": 464,
+    "y": 616
+  },
+  {
+    "id": 77408,
+    "astroType": "Star",
+    "name": "Istar",
+    "type": "A7",
+    "temperature": 8250,
+    "color": "#f8f8fc",
+    "lum": 11,
+    "radius": 1.52,
+    "mass": 1.61,
+    "orbits": [],
+    "x": 568,
+    "y": 752
+  },
+  {
+    "id": 33388,
+    "astroType": "Star",
+    "name": "Garolu",
+    "type": "G6",
+    "temperature": 5520,
+    "color": "#fcf9a6",
+    "lum": 0.96,
+    "radius": 1.04,
+    "mass": 1.04,
+    "orbits": [],
+    "x": 718,
+    "y": 637
+  },
+  {
+    "id": 33515,
+    "astroType": "Star",
+    "name": "Loorilu",
+    "type": "B0",
+    "temperature": 30000,
+    "color": "#c1e8fc",
+    "lum": 30,
+    "radius": 6.6,
+    "mass": 16,
+    "orbits": [],
+    "x": 714,
+    "y": 663
+  },
+  {
+    "id": 99586,
+    "astroType": "Star",
+    "name": "Jirfajur",
+    "type": "B3",
+    "temperature": 24000,
+    "color": "#c1e8fc",
+    "lum": 28.5,
+    "radius": 5.16,
+    "mass": 11.83,
+    "orbits": [],
+    "x": 897,
+    "y": 622
+  },
+  {
+    "id": 94890,
+    "astroType": "Star",
+    "name": "Boku",
+    "type": "G5",
+    "temperature": 5600,
+    "color": "#fcf9a6",
+    "lum": 1.05,
+    "radius": 1.05,
+    "mass": 1.1,
+    "orbits": [],
+    "x": 846,
+    "y": 849
+  },
+  {
+    "id": 70872,
+    "astroType": "Star",
+    "name": "Aloandzima",
+    "type": "F4",
+    "temperature": 6900,
+    "color": "#fcfbec",
+    "lum": 3.6,
+    "radius": 1.3,
+    "mass": 1.26,
+    "orbits": [],
+    "x": 1138,
+    "y": 732
+  },
+  {
+    "id": 32780,
+    "astroType": "Star",
+    "name": "Robarird",
+    "type": "B5",
+    "temperature": 20000,
+    "color": "#c1e8fc",
+    "lum": 27.5,
+    "radius": 4.2,
+    "mass": 9.05,
+    "orbits": [],
+    "x": 1166,
+    "y": 833
+  },
+  {
+    "id": 85123,
+    "astroType": "Star",
+    "name": "Zum",
+    "type": "M3",
+    "temperature": 3310,
+    "color": "#fc602d",
+    "lum": 0.07,
+    "radius": 0.61,
+    "mass": 0.34,
+    "orbits": [],
+    "x": 1190,
+    "y": 605
+  },
+  {
+    "id": 7169,
+    "astroType": "Star",
+    "name": "Alu",
+    "type": "B2",
+    "temperature": 26000,
+    "color": "#c1e8fc",
+    "lum": 29,
+    "radius": 5.64,
+    "mass": 13.22,
+    "orbits": [],
+    "x": 1273,
+    "y": 816
+  },
+  {
+    "id": 7833,
+    "astroType": "Star",
+    "name": "Fastlazur",
+    "type": "G5",
+    "temperature": 5600,
+    "color": "#fcf9a6",
+    "lum": 1.05,
+    "radius": 1.05,
+    "mass": 1.1,
+    "orbits": [],
+    "x": 1519,
+    "y": 819
+  },
+  {
+    "id": 48472,
+    "astroType": "Star",
+    "name": "Nipalke",
+    "type": "K3",
+    "temperature": 4750,
+    "color": "#fcb16e",
+    "lum": 0.44,
+    "radius": 0.88,
+    "mass": 0.7,
+    "orbits": [],
+    "x": 208,
+    "y": 856
+  },
+  {
+    "id": 42556,
+    "astroType": "Star",
+    "name": "Burd",
+    "type": "F5",
+    "temperature": 6750,
+    "color": "#fcfbec",
+    "lum": 3.25,
+    "radius": 1.27,
+    "mass": 1.22,
+    "orbits": [],
+    "x": 284,
+    "y": 949
+  },
+  {
+    "id": 71045,
+    "astroType": "Star",
+    "name": "Tporfast",
+    "type": "B8",
+    "temperature": 14000,
+    "color": "#c1e8fc",
+    "lum": 26,
+    "radius": 2.76,
+    "mass": 4.88,
+    "orbits": [],
+    "x": 314,
+    "y": 898
+  },
+  {
+    "id": 70148,
+    "astroType": "Star",
+    "name": "Zomboustar",
+    "type": "G3",
+    "temperature": 5760,
+    "color": "#fcf9a6",
+    "lum": 1.23,
+    "radius": 1.09,
+    "mass": 1.22,
+    "orbits": [],
+    "x": 500,
+    "y": 724
+  },
+  {
+    "id": 5681,
+    "astroType": "Star",
+    "name": "Istar",
+    "type": "O6",
+    "temperature": 38000,
+    "color": "#66c0fc",
+    "lum": 38,
+    "radius": 7.16,
+    "mass": 22.4,
+    "orbits": [],
+    "x": 584,
+    "y": 804
+  },
+  {
+    "id": 95696,
+    "astroType": "Star",
+    "name": "Fifazommar",
+    "type": "A9",
+    "temperature": 7750,
+    "color": "#f8f8fc",
+    "lum": 7,
+    "radius": 1.44,
+    "mass": 1.47,
+    "orbits": [],
+    "x": 846,
+    "y": 702
+  },
+  {
+    "id": 74345,
+    "astroType": "Star",
+    "name": "Ericakerd",
+    "type": "M1",
+    "temperature": 3570,
+    "color": "#fc602d",
+    "lum": 0.08,
+    "radius": 0.67,
+    "mass": 0.41,
+    "orbits": [],
+    "x": 792,
+    "y": 761
+  },
+  {
+    "id": 2635,
+    "astroType": "Star",
+    "name": "Vejurdefo",
+    "type": "O3",
+    "temperature": 44000,
+    "color": "#66c0fc",
+    "lum": 44,
+    "radius": 7.58,
+    "mass": 27.2,
+    "orbits": [
+      {
+        "astroType": "Planet",
+        "name": "Raburdalut",
+        "starID": 2635
+      },
+      {
+        "astroType": "Planet",
+        "name": "Cufoceja",
+        "starID": 2635
+      },
+      {
+        "astroType": "Planet",
+        "name": "Fokonarbo",
+        "starID": 2635
+      },
+      {
+        "astroType": "Planet",
+        "name": "Uribartsor",
+        "starID": 2635
+      },
+      {
+        "astroType": "Planet",
+        "name": "Birduri",
+        "starID": 2635
+      },
+      {
+        "astroType": "Planet",
+        "name": "Fast",
+        "starID": 2635
+      },
+      {
+        "astroType": "Planet",
+        "name": "Urdujuori",
+        "starID": 2635
+      }
+    ],
+    "x": 802,
+    "y": 732
+  },
+  {
+    "id": 7201,
+    "astroType": "Star",
+    "name": "Ordnou",
+    "type": "G2",
+    "temperature": 5840,
+    "color": "#fcf9a6",
+    "lum": 1.32,
+    "radius": 1.11,
+    "mass": 1.28,
+    "orbits": [],
+    "x": 946,
+    "y": 797
+  }
+]

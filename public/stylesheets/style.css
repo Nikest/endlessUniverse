@@ -14,6 +14,15 @@ a {
   border: none;
   outline: none; }
 
+.controlButton {
+  background: #eecdff;
+  color: #000;
+  width: 100%;
+  margin: 15px 0;
+  padding: 10px 15px;
+  border: none;
+  outline: none; }
+
 .overlay {
   position: fixed;
   top: 0;
