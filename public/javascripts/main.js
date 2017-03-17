@@ -164,30 +164,47 @@ function AstroService() {
             return density
         },
         nameCreator: function () {
-            var particles =
-                ['re', 'te', 'de', 'ge', 'je', 'ke', 'le', 'ce', 've', 'be', 'ne', 'me', 'ru', 'tu', 'du', 'gu', 'ju', 'ku',
-                    'lu', 'cu', 'vu', 'bu', 'nu', 'mu', 'ro', 'to', 'do', 'go', 'jo', 'ko', 'lo', 'co', 'vo', 'bo', 'no',
-                    'mo', 'ra', 'ta', 'da', 'ga', 'ja', 'ka', 'la', 'ca', 'va', 'ba', 'na', 'ma', 'fe', 'fo', 'fa', 'fi',
-                    'war', 'tar', 'bar', 'gar', 'har', 'kar', 'par', 'car', 'nar', 'mar', 'zar', 'a', 'o', 'u', 'i', 'e',
-                    'u', 'astar', 'ostar', 'vastar', 'istar', 'ustar', 'estar', 'zar', 'zor', 'zir', 'zer', 'zur', 'bar',
-                    'mar', 'nar', 'zan', 'zon', 'zun', 'zen', 'zin', 'ard', 'ord', 'urd', 'ird', 'kurd', 'kord', 'kird',
-                    'kerd', 'zam', 'zom', 'zum', 'zem', 'zim', 'and', 'ond', 'und', 'ind', 'burd', 'bord', 'bird', 'berd',
-                    'fast', 'mast', 'bast', 'alo', 'ala', 'alu', 'ali', 'olo', 'ola', 'olu', 'oli', 'jar', 'jor', 'jur',
-                    'jir', 'jer', 'ari', 'ori', 'uri', 'eri', 'thor', 'tpor', 'tbor', 'tmor', 'tsor', 'zif', 'zuf', 'zef',
-                    'zaf', 'zair', 'zeir', 'zoir', 'zuir', 'nipal', 'nopal', 'napal', 'nupal', 'argan', 'argon', 'argun',
-                    'argin', 'ora', 'ara', 'oru', 'ori'];
-            var nameLength = (Math.floor(Math.random() * 4)) + 1;
-            var name = '';
-            for (var i = 0; i < nameLength; i++) {
-                name = name + particles[Math.floor(Math.random() * particles.length)];
-                if (name.length > 9) break
+
+            var symbols = [
+                ['a', 'o', 'u', 'i', 'e', 'y'],
+                ['m', 'l', 'n', 'r'],
+                ['b', 'v', 'g', 'd', 'z', 'j'],
+                ['p', 'f', 'k', 't', 's'],
+                ['h']
+            ];
+
+            var nameTemplate = new Array(Math.floor(Math.random() * 6) + 3);
+            for(var n = 0; n < nameTemplate.length; n++) {
+                nameTemplate[n] = Math.floor(Math.random() * 2);
             }
-            if (name.length <= 2) {
-                return this.nameCreator()
+
+            for(var i = 1; i < nameTemplate.length; i++) {
+                if(nameTemplate[i] == 0) {
+                    if(nameTemplate[i - 1] == 0) {
+                        nameTemplate.splice(i, 0, 1);
+                        i += 1
+                    }
+                } else {
+                    if(nameTemplate[i - 1] == 1 && nameTemplate[i + 1] == 1) {
+                        nameTemplate.splice(i, 0, 0);
+                        i += 1
+                    }
+                }
             }
-            return name.replace(/(?:^|\s)\S/g, function (a) {
+
+            for(var s = 0; s < nameTemplate.length; s++) {
+                if(nameTemplate[s] == 0) {
+                    nameTemplate[s] = symbols[0][Math.floor(Math.random() * (symbols[0].length))]
+                } else {
+                    var symbolsLine = Math.floor(Math.random() * (symbols.length - 1)) + 1;
+                    var symb = Math.floor(Math.random() * (symbols[symbolsLine].length));
+                    nameTemplate[s] = symbols[symbolsLine][symb]
+                }
+            }
+
+            return nameTemplate.join('').replace(/(?:^|\s)\S/g, function (a) {
                 return a.toUpperCase();
-            }).slice(0, 10);
+            });
         },
         createStars: function (dens) {
             density = dens;
