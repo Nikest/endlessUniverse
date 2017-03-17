@@ -59,11 +59,40 @@ function AstroSystem() {
                 frequency: [0, 34]
             }
         },
+        planetClasses: {
+            'Mercury': {
+                radius: [0.1, 0.5],
+                color: '#b6b6b6',
+                frequency: [81, 100]
+            },
+            'Terra': {
+                radius: [0.5, 1.5],
+                color: '#80d68b',
+                frequency: [61, 80]
+            },
+            'Super Terra': {
+                radius: [1.5, 3],
+                color: '#b1d8ce',
+                frequency: [41, 60]
+            },
+            'Neptun': {
+                radius: [3, 7],
+                color: '#87afef',
+                frequency: [21, 40]
+            },
+            'Jovian': {
+                radius: [7, 15],
+                color: '#efcd9f',
+                frequency: [0, 20]
+            }
+        },
         getProperty: function (propArray, percent) {
             return parseFloat(((((propArray[1] - propArray[0]) / 10) * (10 - percent)) + propArray[0]).toFixed(2))
         },
         maxStarRadius: 8,
-        minStarRadius: 0.4
+        minStarRadius: 0.4,
+        maxPlanetRadius: 15,
+        minPlanetRadius: 0.1
     };
 
     var starsArray = [];
@@ -82,10 +111,15 @@ function AstroSystem() {
         this.orbits = [];
     }
 
-    function Planet(starID, name) {
+    function Planet(starID, name, type) {
+        var typeParse = type.split('_');
         this.astroType = 'Planet';
         this.name = name;
         this.starID = starID;
+        this.color = astroHelper.planetClasses[typeParse[0]].color;
+        this.type = typeParse[0];
+        this.radius = astroHelper.getProperty(astroHelper.planetClasses[typeParse[0]].radius, typeParse[1])
+
     }
 
     return {
@@ -136,8 +170,24 @@ function AstroSystem() {
                 }
             });
         },
-        createPlanet: function (starID, name) {
-            return new Planet(starID, name)
+        createPlanet: function (starID, name, type) {
+            return new Planet(starID, name, type)
+        },
+        getPlanetClasses: function () {
+            if(full = 'full') {
+                return astroHelper.planetClasses
+            }
+            var arr = [];
+            for (var c in astroHelper.planetClasses) {
+                arr.push(c)
+            }
+            return arr
+        },
+        getPlanetRadius: function () {
+            return {
+                max: astroHelper.maxStarRadius,
+                min: astroHelper.minStarRadius
+            }
         }
     }
 }
@@ -174,7 +224,6 @@ function AstroService() {
             return density
         },
         nameCreator: function () {
-
             var symbols = [
                 ['a', 'o', 'u', 'i', 'e'],
                 ['l', 'n', 'r'],
@@ -250,10 +299,21 @@ function AstroService() {
         createPlanetsForStar: function (id) {
             var that = this;
             return new Promise(function (res) {
-                var planetCount = Math.floor(Math.random() * 12) + 3;
+                var types = astroSystem.getPlanetClasses('full');
+                function getRandomPlanetType() {
+                    var percent = (Math.floor(Math.random() * 100));
+                    var type = '';
+                    for(var e in types) {
+                        if(percent >= types[e].frequency[0] && percent <= types[e].frequency[1]) {
+                            type = e
+                        }
+                    }
+                    return type + '_' + (Math.floor(Math.random() * 10))
+                }
+                var planetCount = Math.floor(Math.random() * 10) + 3;
                 astroSystem.getStarByID(id).then(function (star) {
                     for (var i = 0; i < planetCount; i++) {
-                        star.orbits.push(astroSystem.createPlanet(star.id, that.nameCreator()))
+                        star.orbits.push(astroSystem.createPlanet(star.id, that.nameCreator(), getRandomPlanetType()))
                     }
                     res()
                 })
@@ -363,8 +423,6 @@ function AstroViewer() {
                     shadowBlur: 2
                 });
 
-                var toMsg = stars[s].name + ' ' + stars[s].type;
-
                 (function (starView, starObj) {
                     starView.on('mousedown touchstart', function () {
                         function sendMessage() {
@@ -429,24 +487,22 @@ function AstroViewer() {
             });
             generalLayer.add(background);
 
-            var density = astroService.getDensity();
-            var maxView = 100;
-            var minView = 10;
-            var padding = 20;
             var maxStarRadius = astroSystem.getStarsRadius().max;
             var minStarRadius = astroSystem.getStarsRadius().min;
-            var maxPlanetRadius = 30;
-            var minPlanetRadius = 10;
+            var minView = 7;
+            var maxView = 30;
+            var maxPlanetRadius = astroSystem.getPlanetRadius().max;
+            var minPlanetRadius = astroSystem.getPlanetRadius().min;
             var radiusPercent = (maxStarRadius - minStarRadius) / 100;
+            var planetRadiusPercent = (maxPlanetRadius - minPlanetRadius) / 100;
+
             var radiusStar = 50; //((maxView - minView) / 100) * (waiting.star.radius / radiusPercent) + minView;
-            var radiusPlanet = 20;
-            var planeDist = 80 + maxPlanetRadius;
+            var planeDist = 80 + maxView;
             var systemCenter = {
                 x: stage.attrs.width / 2,
                 y: stage.attrs.height / 2,
                 relativeX: (stage.attrs.width / 2) - (((waiting.star.orbits.length * planeDist) + (radiusStar * 2)) / 2)
             };
-            alert(waiting.star.orbits.length);
             var star = new Konva.Circle({
                 x: systemCenter.relativeX,
                 y: systemCenter.y,
@@ -501,13 +557,38 @@ function AstroViewer() {
             generalLayer.add(title);
 
             for(var p = 0; p < waiting.star.orbits.length; p++) {
+                var radiusPlanet = ((maxView - minView) / 100) * (waiting.star.orbits[p].radius / planetRadiusPercent) + minView;
+
                 var planetX = systemCenter.relativeX + radiusStar + (planeDist * (p + 1));
                 var planet = new Konva.Circle({
                     x: planetX,
                     y: systemCenter.y,
                     radius: radiusPlanet,
-                    fill: '#a83f1f'
+                    fill: waiting.star.orbits[p].color
                 });
+
+                (function (planetView, planetObj) {
+                    planetView.on('mousedown touchstart', function () {
+                        function sendMessage() {
+                            waiting.star = planetObj;
+                            messager.sendInterfaceMessage({
+                                title: 'Star: ' + planetObj.name,
+                                body: ['Class: <span>' + planetObj.type + '</span>',
+                                    'Radius: <span>' + planetObj.radius + '</span> in Earth radius (' +
+                                    (planetObj.radius * 6000).toFixed(0) + ' km)']
+                            });
+                        }
+
+                        /*if (planetObj.orbits.length == 0) {
+                            astroService.createPlanetsForStar(planetObj.id).then(function () {
+                                sendMessage();
+                            });
+                            return
+                        }*/
+
+                        sendMessage();
+                    });
+                })(planet, waiting.star.orbits[p]);
 
                 var planetTitle = new Konva.Text({
                     x: planetX,
