@@ -176,7 +176,7 @@ function AstroService() {
         nameCreator: function () {
 
             var symbols = [
-                ['a', 'o', 'u', 'i', 'e', 'y'],
+                ['a', 'o', 'u', 'i', 'e'],
                 ['l', 'n', 'r'],
                 ['m', 'b', 'v', 'g', 'd', 'z', 'j'],
                 ['p', 'f', 'k', 't', 's', 'h']
@@ -358,7 +358,9 @@ function AstroViewer() {
                     x: xCoord,
                     y: yCoord,
                     radius: radius,
-                    fill: stars[s].color
+                    fill: stars[s].color,
+                    shadowColor: stars[s].color,
+                    shadowBlur: 2
                 });
 
                 var toMsg = stars[s].name + ' ' + stars[s].type;
@@ -433,19 +435,25 @@ function AstroViewer() {
             var padding = 20;
             var maxStarRadius = astroSystem.getStarsRadius().max;
             var minStarRadius = astroSystem.getStarsRadius().min;
+            var maxPlanetRadius = 30;
+            var minPlanetRadius = 10;
             var radiusPercent = (maxStarRadius - minStarRadius) / 100;
             var radiusStar = 50; //((maxView - minView) / 100) * (waiting.star.radius / radiusPercent) + minView;
             var radiusPlanet = 20;
+            var planeDist = 80 + maxPlanetRadius;
             var systemCenter = {
                 x: stage.attrs.width / 2,
-                y: stage.attrs.height / 2
+                y: stage.attrs.height / 2,
+                relativeX: (stage.attrs.width / 2) - (((waiting.star.orbits.length * planeDist) + (radiusStar * 2)) / 2)
             };
-
+            alert(waiting.star.orbits.length);
             var star = new Konva.Circle({
-                x: paddindWorld + radiusStar,
+                x: systemCenter.relativeX,
                 y: systemCenter.y,
                 radius: radiusStar,
-                fill: waiting.star.color
+                fill: waiting.star.color,
+                shadowColor: waiting.star.color,
+                shadowBlur: 50
             });
 
             (function (starView, starObj) {
@@ -480,7 +488,7 @@ function AstroViewer() {
             })(star, waiting.star);
 
             var title = new Konva.Text({
-                x: paddindWorld  + radiusStar,
+                x: systemCenter.relativeX,
                 y: systemCenter.y + radiusStar + 10,
                 text: waiting.star.name,
                 fontSize: 20,
@@ -493,7 +501,7 @@ function AstroViewer() {
             generalLayer.add(title);
 
             for(var p = 0; p < waiting.star.orbits.length; p++) {
-                var planetX = paddindWorld + radiusStar + radiusPlanet + ((p + 1) * 100);
+                var planetX = systemCenter.relativeX + radiusStar + (planeDist * (p + 1));
                 var planet = new Konva.Circle({
                     x: planetX,
                     y: systemCenter.y,
