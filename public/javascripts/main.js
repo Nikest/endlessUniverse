@@ -5,58 +5,65 @@ function AstroSystem() {
             'O': {
                 temperatures: [30000, 50000],
                 color: '#66c0fc',
+                lightColor: '#9ad5ff',
                 lum: [30, 50],
                 radius: [6.6, 8],
                 mass: [16, 32],
-                frequency: [95, 100]
+                frequency: [97, 100]
             },
             'B': {
                 temperatures: [10000, 30000],
                 color: '#c1e8fc',
+                lightColor: '#e2f8ff',
                 lum: [25, 30],
                 radius: [1.8, 6.6],
                 mass: [2.1, 16],
-                frequency: [96, 100]
+                frequency: [90, 96]
             },
             'A': {
                 temperatures: [7500, 10000],
                 color: '#f8f8fc',
+                lightColor: '#fdfdfd',
                 lum: [5, 25],
                 radius: [1.4, 1.8],
                 mass: [1.4, 2.1],
-                frequency: [90, 95]
+                frequency: [70, 89]
             },
             'F': {
                 temperatures: [6000, 7500],
                 color: '#fcfbec',
+                lightColor: '#fcfcf4',
                 lum: [1.5, 5],
                 radius: [1.15, 1.4],
                 mass: [1.04, 1.4],
-                frequency: [80, 89]
+                frequency: [60, 79]
             },
             'G': {
                 temperatures: [5200, 6000],
                 color: '#fcf9a6',
+                lightColor: '#fcf6ce',
                 lum: [0.6, 1.5],
                 radius: [0.96, 1.15],
                 mass: [0.8, 1.4],
-                frequency: [55, 79]
+                frequency: [45, 59]
             },
             'K': {
                 temperatures: [3700, 5200],
                 color: '#fcb16e',
+                lightColor: '#fcc993',
                 lum: [0.08, 0.6],
                 radius: [0.7, 0.96],
                 mass: [0.45, 0.8],
-                frequency: [35, 54]
+                frequency: [25, 44]
             },
             'M': {
                 temperatures: [2400, 3700],
                 color: '#fc602d',
+                lightColor: '#fc8f63',
                 lum: [0.04, 0.08],
                 radius: [0.4, 0.7],
                 mass: [0.08, 0.45],
-                frequency: [0, 34]
+                frequency: [0, 25]
             }
         },
         planetClasses: {
@@ -105,6 +112,7 @@ function AstroSystem() {
         this.type = type;
         this.temperature = astroHelper.getProperty(astroHelper.starClasses[typeParse[0]].temperatures, typeParse[1]);
         this.color = astroHelper.starClasses[typeParse[0]].color;
+        this.lightColor = astroHelper.starClasses[typeParse[0]].lightColor;
         this.lum = astroHelper.getProperty(astroHelper.starClasses[typeParse[0]].lum, typeParse[1]);
         this.radius = astroHelper.getProperty(astroHelper.starClasses[typeParse[0]].radius, typeParse[1]);
         this.mass = astroHelper.getProperty(astroHelper.starClasses[typeParse[0]].mass, typeParse[1]);
@@ -497,7 +505,7 @@ function AstroViewer() {
             var radiusPercent = (maxStarRadius - minStarRadius) / 100;
             var planetRadiusPercent = (maxPlanetRadius - minPlanetRadius) / 100;
 
-            var radiusStar = 50; //((maxView - minView) / 100) * (waiting.star.radius / radiusPercent) + minView;
+            var radiusStar = ((150 - 50) / 100) * (waiting.star.radius / radiusPercent) + 50;
             var planeDist = 80 + maxView;
             var systemCenter = {
                 x: stage.attrs.width / 2,
@@ -508,7 +516,11 @@ function AstroViewer() {
                 x: systemCenter.relativeX,
                 y: systemCenter.y,
                 radius: radiusStar,
-                fill: waiting.star.color,
+                fillRadialGradientStartPoint: {x: 0, y: 0},
+                fillRadialGradientStartRadius: radiusStar * 0.6,
+                fillRadialGradientEndPoint: 0,
+                fillRadialGradientEndRadius: radiusStar,
+                fillRadialGradientColorStops: [0, waiting.star.color, 1, waiting.star.lightColor],
                 shadowColor: waiting.star.color,
                 shadowBlur: 50
             });
@@ -565,7 +577,14 @@ function AstroViewer() {
                     x: planetX,
                     y: systemCenter.y,
                     radius: radiusPlanet,
-                    fill: waiting.star.orbits[p].color
+                    fillRadialGradientStartPoint: {x: radiusPlanet, y: 0},
+                    fillRadialGradientStartRadius: radiusPlanet * 2,
+                    fillRadialGradientEndPoint: {x: radiusPlanet / 2, y: 0},
+                    fillRadialGradientEndRadius: radiusPlanet,
+                    fillRadialGradientColorStops: [0, '#000', 1, waiting.star.orbits[p].color],
+                    shadowColor: '#87afef',
+                    shadowBlur: 5,
+                    rotation: 180
                 });
 
                 (function (planetView, planetObj) {
@@ -573,7 +592,7 @@ function AstroViewer() {
                         function sendMessage() {
                             waiting.star = planetObj;
                             messager.sendInterfaceMessage({
-                                title: 'Star: ' + planetObj.name,
+                                title: 'Planet: ' + planetObj.name,
                                 body: ['Class: <span>' + planetObj.type + '</span>',
                                     'Radius: <span>' + planetObj.radius + '</span> in Earth radius (' +
                                     (planetObj.radius * 6370).toFixed(0) + ' km)']
