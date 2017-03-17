@@ -270,10 +270,11 @@ function AstroService() {
 
             return nameTemplate.join('').replace(/(?:^|\s)\S/g, function (a) {
                 return a.toUpperCase();
-            }).replace(/e$|o$/, function (s) {
+            }).replace(/e$|o$|u$/, function (s) {
                 switch (s) {
                     case 'e': return 'et';
                     case 'o': return 'os';
+                    case 'u': return 'ur'
                 }
             });
         },
@@ -575,7 +576,7 @@ function AstroViewer() {
                                 title: 'Star: ' + planetObj.name,
                                 body: ['Class: <span>' + planetObj.type + '</span>',
                                     'Radius: <span>' + planetObj.radius + '</span> in Earth radius (' +
-                                    (planetObj.radius * 6000).toFixed(0) + ' km)']
+                                    (planetObj.radius * 6370).toFixed(0) + ' km)']
                             });
                         }
 
