@@ -167,10 +167,9 @@ function AstroService() {
 
             var symbols = [
                 ['a', 'o', 'u', 'i', 'e', 'y'],
-                ['m', 'l', 'n', 'r'],
-                ['b', 'v', 'g', 'd', 'z', 'j'],
-                ['p', 'f', 'k', 't', 's'],
-                ['h']
+                ['l', 'n', 'r'],
+                ['m', 'b', 'v', 'g', 'd', 'z', 'j'],
+                ['p', 'f', 'k', 't', 's', 'h']
             ];
 
             var nameTemplate = new Array(Math.floor(Math.random() * 6) + 3);
@@ -191,12 +190,20 @@ function AstroService() {
                     }
                 }
             }
-
+            var prev = 0;
+            function generateWithRules() {
+                var num = Math.floor(Math.random() * (symbols.length - 1)) + 1;
+                if((num == 2 || num == 3) && (prev == 2 || prev == 3)) {
+                    return generateWithRules();
+                }
+                return num
+            }
             for(var s = 0; s < nameTemplate.length; s++) {
                 if(nameTemplate[s] == 0) {
                     nameTemplate[s] = symbols[0][Math.floor(Math.random() * (symbols[0].length))]
                 } else {
-                    var symbolsLine = Math.floor(Math.random() * (symbols.length - 1)) + 1;
+                    var symbolsLine = generateWithRules();
+                    prev = symbolsLine;
                     var symb = Math.floor(Math.random() * (symbols[symbolsLine].length));
                     nameTemplate[s] = symbols[symbolsLine][symb]
                 }
@@ -286,7 +293,7 @@ function AstroViewer() {
         getStage: function () {
             return stage
         },
-        viewStarsCluster: function (min, max) { console.log('stars cluster');
+        viewStarsCluster: function (min, max) {
             generalLayer.destroy();
             background = new Konva.Rect({
                 x: 0,
