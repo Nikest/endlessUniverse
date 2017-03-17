@@ -1,4 +1,4 @@
-# Endless Universe v 0.2.1
+# Endless Universe v 0.2.2
 
 ```sh
 $ npm install
