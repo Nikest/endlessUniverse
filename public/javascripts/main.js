@@ -7,49 +7,56 @@ function AstroSystem() {
                 color: '#66c0fc',
                 lum: [30, 50],
                 radius: [6.6, 8],
-                mass: [16, 32]
+                mass: [16, 32],
+                frequency: [95, 100]
             },
             'B': {
                 temperatures: [10000, 30000],
                 color: '#c1e8fc',
                 lum: [25, 30],
                 radius: [1.8, 6.6],
-                mass: [2.1, 16]
+                mass: [2.1, 16],
+                frequency: [96, 100]
             },
             'A': {
                 temperatures: [7500, 10000],
                 color: '#f8f8fc',
                 lum: [5, 25],
                 radius: [1.4, 1.8],
-                mass: [1.4, 2.1]
+                mass: [1.4, 2.1],
+                frequency: [90, 95]
             },
             'F': {
                 temperatures: [6000, 7500],
                 color: '#fcfbec',
                 lum: [1.5, 5],
                 radius: [1.15, 1.4],
-                mass: [1.04, 1.4]
+                mass: [1.04, 1.4],
+                frequency: [80, 89]
             },
             'G': {
                 temperatures: [5200, 6000],
                 color: '#fcf9a6',
                 lum: [0.6, 1.5],
                 radius: [0.96, 1.15],
-                mass: [0.8, 1.4]
+                mass: [0.8, 1.4],
+                frequency: [55, 79]
             },
             'K': {
                 temperatures: [3700, 5200],
                 color: '#fcb16e',
                 lum: [0.08, 0.6],
                 radius: [0.7, 0.96],
-                mass: [0.45, 0.8]
+                mass: [0.45, 0.8],
+                frequency: [35, 54]
             },
             'M': {
                 temperatures: [2400, 3700],
                 color: '#fc602d',
                 lum: [0.04, 0.08],
                 radius: [0.4, 0.7],
-                mass: [0.08, 0.45]
+                mass: [0.08, 0.45],
+                frequency: [0, 34]
             }
         },
         getProperty: function (propArray, percent) {
@@ -95,7 +102,10 @@ function AstroSystem() {
         getAllStars: function () {
             return starsArray
         },
-        getStarClasses: function () {
+        getStarClasses: function (full) {
+            if(full = 'full') {
+                return astroHelper.starClasses
+            }
             var arr = [];
             for (var c in astroHelper.starClasses) {
                 arr.push(c)
@@ -211,16 +221,26 @@ function AstroService() {
 
             return nameTemplate.join('').replace(/(?:^|\s)\S/g, function (a) {
                 return a.toUpperCase();
+            }).replace(/e$|o$/, function (s) {
+                switch (s) {
+                    case 'e': return 'et';
+                    case 'o': return 'os';
+                }
             });
         },
         createStars: function (dens) {
             density = dens;
             var num = (width / density) * (height / density);
-
-            var types = astroSystem.getStarClasses();
-
+            var types = astroSystem.getStarClasses('full');
             function getRandomStarType() {
-                return types[(Math.floor(Math.random() * types.length))] + '' + (Math.floor(Math.random() * 10))
+                var percent = (Math.floor(Math.random() * 100));
+                var type = '';
+                for(var e in types) {
+                    if(percent >= types[e].frequency[0] && percent <= types[e].frequency[1]) {
+                        type = e
+                    }
+                }
+                return type + (Math.floor(Math.random() * 10))
             }
 
             for (var i = 0; i < num; i++) {
